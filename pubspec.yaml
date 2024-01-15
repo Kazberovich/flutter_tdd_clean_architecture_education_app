@@ -44,3 +44,46 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/vectors/
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/
+
+  fonts:
+    - family: Aeonik
+      fonts:
+        - asset: assets/fonts/aeonik/AeonikTRIAL-Bold.otf
+          weight: 700
+        - asset: assets/fonts/aeonik/AeonikTRIAL-BoldItalic.otf
+          style: italic
+          weight: 700
+        - asset: assets/fonts/aeonik/AeonikTRIAL-Light.otf
+          weight: 300
+        - asset: assets/fonts/aeonik/AeonikTRIAL-LightItalic.otf
+          style: italic
+          weight: 300
+        - asset: assets/fonts/aeonik/AeonikTRIAL-Regular.otf
+          weight: 400
+        - asset: assets/fonts/aeonik/AeonikTRIAL-RegularItalic.otf
+          style: italic
+          weight: 400
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/poppins/Poppins-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/poppins/Poppins-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/poppins/Poppins-Light.ttf
+          weight: 300
+        - asset: assets/fonts/poppins/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/poppins/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/poppins/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/poppins/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/poppins/Poppins-ExtraBold.ttf
+          weight: 800
