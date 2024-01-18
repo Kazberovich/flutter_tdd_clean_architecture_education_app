@@ -27,7 +27,11 @@ class OnboardingLocalDataSourceImplementation
   }
 
   @override
-  Future<bool> checkIfUserIsFirstTimer() {
-    throw UnimplementedError();
+  Future<bool> checkIfUserIsFirstTimer() async {
+    try {
+      return _sharedPreferences.getBool(kFirstTimerKey) ?? true;
+    } catch (e) {
+      throw CacheException(message: e.toString());
+    }
   }
 }
