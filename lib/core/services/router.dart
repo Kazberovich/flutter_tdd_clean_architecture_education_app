@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/common/views/page_under_construction.dart';
-import 'package:tdd_education_app/src/onboarding/presentation/onboarding_screen.dart';
+import 'package:tdd_education_app/src/onboarding/presentation/views/onboarding_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {

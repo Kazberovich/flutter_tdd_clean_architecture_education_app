@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/fonts.dart';
 import 'package:tdd_education_app/core/services/router.dart';
-import 'package:tdd_education_app/src/onboarding/presentation/onboarding_screen.dart';
+import 'package:tdd_education_app/src/onboarding/presentation/views/onboarding_screen.dart';
 
 void main() {
   runApp(const MyApp());
