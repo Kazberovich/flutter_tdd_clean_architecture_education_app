@@ -18,8 +18,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       );
 
     default:
-      return _pageBuilder((_) => const PageUnderConstruction(),
-          settings: routeSettings);
+      return _pageBuilder(
+        (_) => const PageUnderConstruction(),
+        settings: routeSettings,
+      );
   }
 }
 
