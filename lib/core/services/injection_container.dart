@@ -13,6 +13,7 @@ Future<void> init() async {
   final prefs = await SharedPreferences.getInstance();
   // Feature -> Onboarding Feature
   // Business Logic
+
   serviceLocator
     ..registerFactory(
       () => OnboardingCubit(
@@ -25,7 +26,6 @@ Future<void> init() async {
         serviceLocator(),
       ),
     )
-    ..registerLazySingleton(() => CacheFirstTimer(serviceLocator()))
     ..registerLazySingleton(() => CheckIfUserIsFirstTimer(serviceLocator()))
     ..registerLazySingleton<OnboardingRepository>(
         () => OnboardingRepositoryImplementation(serviceLocator()))
