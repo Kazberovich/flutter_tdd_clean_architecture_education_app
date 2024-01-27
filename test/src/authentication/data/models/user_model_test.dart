@@ -27,5 +27,12 @@ void main() {
       expect(result, equals(tLocalUserModel));
       expect(result, isA<LocalUserModel>());
     });
+
+    test('should throw an [Error] when the map is invalid', () {
+      final map = tMap..remove('uid');
+
+      const call = LocalUserModel.fromMap;
+      expect(() => call(map), throwsA(isA<Error>()));
+    });
   });
 }
