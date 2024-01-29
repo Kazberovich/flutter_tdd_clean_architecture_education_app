@@ -20,6 +20,6 @@ abstract class AuthenticationRepository {
 
   ResultFuture<void> updateUser({
     required UpdateUserAction action,
-    dynamic userData,
+    required dynamic userData,
   });
 }
