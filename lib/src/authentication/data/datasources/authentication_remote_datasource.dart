@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
 import 'package:tdd_education_app/core/errors/exceptions.dart';
+import 'package:tdd_education_app/core/utils/constants.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 
@@ -113,7 +114,8 @@ class AuthenticationRemoteDataSourceImplementation
       );
 
       await userCredentials.user?.updateDisplayName(fullName);
-      await userCredentials.user?.updatePhotoURL('photoURL');
+      await userCredentials.user?.updatePhotoURL(kDefaultAvatar);
+      await _setUserData(_authClient.currentUser!, email);
     } on FirebaseAuthException catch (e) {
       throw ServerException(
         message: e.message ?? 'Error Occurred',
