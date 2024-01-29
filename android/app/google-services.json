@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "371833278410",
+    "project_id": "educatoin-app",
+    "storage_bucket": "educatoin-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371833278410:android:17cb1ddf3983030f464933",
+        "android_client_info": {
+          "package_name": "com.kazbers.educationapp.tdd_education_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLj2IB-_cweuwNysELpAJJ9G6mCwbkj14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
