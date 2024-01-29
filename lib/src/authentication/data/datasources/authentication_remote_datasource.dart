@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -131,8 +134,63 @@ class AuthenticationRemoteDataSourceImplementation
   }
 
   @override
-  Future<void> updateUser(
-      {required UpdateUserAction action, required dynamic userData}) async {}
+  Future<void> updateUser({
+    required UpdateUserAction action,
+    required dynamic userData,
+  }) async {
+    try {
+      switch (action) {
+        case UpdateUserAction.email:
+          await _authClient.currentUser?.updateEmail(userData as String);
+          await _updateUserData({'email': userData});
+
+        case UpdateUserAction.displayName:
+          await _authClient.currentUser?.updateDisplayName(userData as String);
+          await _updateUserData({'fullName': userData});
+
+        case UpdateUserAction.profilePicture:
+          final ref = _dbClient
+              .ref()
+              .child('profile_pics/${_authClient.currentUser?.uid}');
+          await ref.putFile(userData as File);
+          final url = await ref.getDownloadURL();
+          await _authClient.currentUser?.updatePhotoURL(url);
+          await _updateUserData({'profilePic': url});
+
+        case UpdateUserAction.password:
+          if (_authClient.currentUser?.email == null) {
+            throw const ServerException(
+              message: 'User does not exist',
+              statusCode: 'Insufficient permission',
+            );
+          }
+
+          final newData = jsonDecode(userData as String) as DataMap;
+          await _authClient.currentUser?.reauthenticateWithCredential(
+            EmailAuthProvider.credential(
+              email: _authClient.currentUser!.email!,
+              password: newData['oldPassword'] as String,
+            ),
+          );
+          await _authClient.currentUser
+              ?.updatePassword(newData['newPassword'] as String);
+
+        case UpdateUserAction.bio:
+          await _updateUserData({'bio': userData as String});
+      }
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Error Occurred',
+        statusCode: e.code,
+      );
+    } catch (error, stack) {
+      debugPrintStack(stackTrace: stack);
+      throw ServerException(
+        message: error.toString(),
+        statusCode: '505',
+      );
+    }
+  }
 
   Future<DocumentSnapshot<DataMap>> _getUserData(String uid) async {
     return _cloudStoreClient.collection('users').doc(uid).get();
@@ -148,5 +206,12 @@ class AuthenticationRemoteDataSourceImplementation
             profilePicture: user.photoURL ?? '',
           ).toMap(),
         );
+  }
+
+  Future<void> _updateUserData(DataMap data) async {
+    await _cloudStoreClient
+        .collection('users')
+        .doc(_authClient.currentUser?.uid)
+        .update(data);
   }
 }
