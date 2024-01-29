@@ -29,10 +29,24 @@ void main() {
     });
 
     test('should throw an [Error] when the map is invalid', () {
-      final map = tMap..remove('uid');
+      final map = DataMap.from(tMap)..remove('uid');
 
       const call = LocalUserModel.fromMap;
       expect(() => call(map), throwsA(isA<Error>()));
+    });
+  });
+
+  group('toMap', () {
+    test('should return a valid [DataMap] from the model', () {
+      final result = tLocalUserModel.toMap();
+      expect(result, equals(tMap));
+    });
+  });
+
+  group('copyWith', () {
+    test('should return a valid [LocalUserModel] with updated values', () {
+      final result = tLocalUserModel.copyWith(uid: '22');
+      expect(result.uid, '22');
     });
   });
 }
