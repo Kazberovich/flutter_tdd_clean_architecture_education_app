@@ -36,7 +36,10 @@ abstract class AuthenticationRemoteDatasource {
 class AuthenticationRemoteDataSourceImplementation
     implements AuthenticationRemoteDatasource {
   const AuthenticationRemoteDataSourceImplementation(
-      this._authClient, this._cloudStoreClient, this._dbClient);
+    this._authClient,
+    this._cloudStoreClient,
+    this._dbClient,
+  );
 
   final FirebaseAuth _authClient;
   final FirebaseFirestore _cloudStoreClient;
