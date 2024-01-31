@@ -50,9 +50,10 @@ void main() {
   setUpAll(() async {
     authClient = MockFirebaseAuth();
     cloudStoreClient = FakeFirebaseFirestore();
-    documentReference =
-        await cloudStoreClient.collection('users').add(tUser.toMap());
-
+    documentReference = cloudStoreClient.collection('users').doc();
+    await documentReference.set(
+      tUser.copyWith(uid: documentReference.id).toMap(),
+    );
     mockUser = MockUser().._uid = documentReference.id;
     dbClient = MockFirebaseStorage();
     userCredential = MockUserCredential(mockUser);
@@ -99,6 +100,89 @@ void main() {
 
       expect(() => call(tEmail), throwsA(isA<ServerException>()));
       verify(() => authClient.sendPasswordResetEmail(email: tEmail)).called(1);
+      verifyNoMoreInteractions(authClient);
+    });
+  });
+
+  group('signIn', () {
+    test('should return [LocalUserModel] when no [Exception] is thrown',
+        () async {
+      when(
+        () => authClient.signInWithEmailAndPassword(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => userCredential);
+
+      final result =
+          await datasource.signIn(email: tEmail, password: tPassword);
+
+      expect(result.uid, userCredential.user!.uid);
+      expect(result.points, 0);
+
+      verify(
+        () => authClient.signInWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(authClient);
+    });
+
+    test(
+        'should throw [ServerException] when [FirebaseAuthException] is thrown',
+        () async {
+      when(
+        () => authClient.signInWithEmailAndPassword(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenThrow(tFirebaseAuthException);
+
+      final call = datasource.signIn;
+
+      expect(
+        () => call(email: tEmail, password: tPassword),
+        throwsA(
+          isA<ServerException>(),
+        ),
+      );
+
+      verify(
+        () => authClient.signInWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        ),
+      ).called(1);
+      verifyNoMoreInteractions(authClient);
+    });
+
+    test('should throw [ServerException] when user is null after signing in',
+        () async {
+      final emptyUserCredential = MockUserCredential();
+      when(
+        () => authClient.signInWithEmailAndPassword(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => emptyUserCredential);
+
+      final call = datasource.signIn;
+
+      expect(
+        () => call(
+          email: tEmail,
+          password: tPassword,
+        ),
+        throwsA(isA<ServerException>()),
+      );
+
+      verify(
+        () => authClient.signInWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        ),
+      ).called(1);
       verifyNoMoreInteractions(authClient);
     });
   });
