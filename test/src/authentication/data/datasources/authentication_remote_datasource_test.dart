@@ -8,6 +8,7 @@ import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:tdd_education_app/core/errors/exceptions.dart';
+import 'package:tdd_education_app/core/utils/constants.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/authentication/data/datasources/authentication_remote_datasource.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
@@ -184,6 +185,78 @@ void main() {
         ),
       ).called(1);
       verifyNoMoreInteractions(authClient);
+    });
+  });
+
+  group('signUp', () {
+    test('should complete successfully when no [Exception] is thrown',
+        () async {
+      when(
+        () => authClient.createUserWithEmailAndPassword(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenAnswer((_) async => userCredential);
+
+      when(() => userCredential.user?.updateDisplayName(any()))
+          .thenAnswer((_) async => Future.value());
+
+      when(() => userCredential.user?.updatePhotoURL(any()))
+          .thenAnswer((_) async => Future.value());
+
+      final call = datasource.signUp(
+        email: tEmail,
+        fullName: tFullName,
+        password: tPassword,
+      );
+
+      expect(call, completes);
+
+      verify(
+        () => authClient.createUserWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        ),
+      ).called(1);
+
+      await untilCalled(() => userCredential.user?.updateDisplayName(any()));
+      await untilCalled(() => userCredential.user?.updatePhotoURL(any()));
+
+      verify(() => userCredential.user?.updateDisplayName(tFullName)).called(1);
+      verify(() => userCredential.user?.updatePhotoURL(kDefaultAvatar))
+          .called(1);
+      verifyNoMoreInteractions(authClient);
+    });
+
+    test(
+        'should throw [ServerException] when [FirebaseAuthException] is thrown',
+        () async {
+      when(
+        () => authClient.createUserWithEmailAndPassword(
+          email: any(named: 'email'),
+          password: any(named: 'password'),
+        ),
+      ).thenThrow(tFirebaseAuthException);
+
+      final call = datasource.signUp;
+
+      expect(
+        () => call(
+          email: tEmail,
+          password: tPassword,
+          fullName: tFullName,
+        ),
+        throwsA(
+          isA<ServerException>(),
+        ),
+      );
+
+      verify(
+        () => authClient.createUserWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        ),
+      ).called(1);
     });
   });
 }
