@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -38,6 +39,8 @@ class MockUserCredential extends Mock implements UserCredential {
     if (_user != value) _user = value;
   }
 }
+
+class MockAuthCredential extends Mock implements AuthCredential {}
 
 void main() {
   late FirebaseAuth authClient;
@@ -263,6 +266,10 @@ void main() {
   });
 
   group('updateUser', () {
+    setUp(() {
+      registerFallbackValue(MockAuthCredential());
+    });
+
     test(
         'should update user displayName successfully '
         'when no [Exception] is thrown', () async {
@@ -327,9 +334,36 @@ void main() {
 
       expect(userData.data()!['bio'], tBio);
     });
+
+    test(
+        'should update user password successfully when no [Exception] is thrown',
+        () async {
+      when(() => mockUser.updatePassword(any()))
+          .thenAnswer((_) async => Future.value());
+
+      when(() => mockUser.reauthenticateWithCredential(any()))
+          .thenAnswer((_) async => userCredential);
+
+      when(() => mockUser.email).thenReturn(tEmail);
+
+      await datasource.updateUser(
+        action: UpdateUserAction.password,
+        userData: jsonEncode(
+          {'oldPassword': 'oldPassword', 'newPassword': tPassword},
+        ),
+      );
+
+      verify(() => mockUser.updatePassword(tPassword));
+
+      verifyNever(() => mockUser.updateEmail(any()));
+      verifyNever(() => mockUser.updatePhotoURL(any()));
+      verifyNever(() => mockUser.updateDisplayName(any()));
+
+      final userData =
+          await cloudStoreClient.collection('users').doc(mockUser.uid).get();
+      expect(userData.data()!['password'], null);
+    });
   });
-
-
 }
 
 // BELOW IS NOT RIGHT the EXAMPLE
