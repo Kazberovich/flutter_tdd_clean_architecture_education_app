@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,7 +46,7 @@ class MockAuthCredential extends Mock implements AuthCredential {}
 void main() {
   late FirebaseAuth authClient;
   late FirebaseFirestore cloudStoreClient;
-  late FirebaseStorage dbClient;
+  late MockFirebaseStorage dbClient;
   late AuthenticationRemoteDatasource datasource;
   late MockUser mockUser;
   late UserCredential userCredential;
@@ -363,6 +364,29 @@ void main() {
           await cloudStoreClient.collection('users').doc(mockUser.uid).get();
       expect(userData.data()!['password'], null);
     });
+
+    test(
+      'should update profilePic successfully when no [Exception] is thrown',
+      () async {
+        final newProfilePic = File('assets/images/onboarding_background.png');
+
+        when(() => mockUser.updatePhotoURL(any())).thenAnswer(
+          (_) async => Future.value(),
+        );
+        await datasource.updateUser(
+          action: UpdateUserAction.profilePicture,
+          userData: newProfilePic,
+        );
+
+        verify(() => mockUser.updatePhotoURL(any())).called(1);
+
+        verifyNever(() => mockUser.updateEmail(any()));
+        verifyNever(() => mockUser.updatePassword(any()));
+        verifyNever(() => mockUser.updateDisplayName(any()));
+
+        expect(dbClient.storedFilesMap.isNotEmpty, isTrue);
+      },
+    );
   });
 }
 
