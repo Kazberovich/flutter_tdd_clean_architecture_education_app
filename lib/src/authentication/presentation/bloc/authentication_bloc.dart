@@ -4,14 +4,33 @@ import 'dart:html';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
+import 'package:tdd_education_app/src/authentication/domain/entities/user.dart';
+import 'package:tdd_education_app/src/authentication/domain/usecases/forgot_password.dart';
+import 'package:tdd_education_app/src/authentication/domain/usecases/sign_in.dart';
+import 'package:tdd_education_app/src/authentication/domain/usecases/sign_up.dart';
+import 'package:tdd_education_app/src/authentication/domain/usecases/update_user.dart';
 
 part 'authentication_event.dart';
+
 part 'authentication_state.dart';
 
-class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
-  AuthenticationBloc() : super(AuthenticationInitial()) {
-    on<AuthenticationEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
+  AuthenticationBloc({
+    required SignInUsecase signInUsecase,
+    required SignUpUsecase signUpUsecase,
+    required ForgotPasswordUsecase forgotPasswordUsecase,
+    required UpdateUserUsecase updateUserUsecase,
+  })  : _signInUsecase = signInUsecase,
+        _signUpUsecase = signUpUsecase,
+        _forgotPasswordUsecase = forgotPasswordUsecase,
+        _updateUserUsecase = updateUserUsecase,
+        super(const AuthenticationInitial()) {
+    on<AuthenticationEvent>((event, emit) {});
   }
+
+  final SignInUsecase _signInUsecase;
+  final SignUpUsecase _signUpUsecase;
+  final UpdateUserUsecase _updateUserUsecase;
+  final ForgotPasswordUsecase _forgotPasswordUsecase;
 }
