@@ -21,6 +21,14 @@ void main() {
   late UpdateUserUsecase updateUserUsecase;
   late AuthenticationBloc authenticationBloc;
 
+  const tPassword = 'password';
+  const tEmail = 'email';
+  const tFullName = 'fullName';
+
+  const tSignUpParams = SignUpParams.empty();
+  const tUpdateUserParams = UpdateUserParams.empty();
+  const tSignInParams = SignInParams.empty();
+
   setUp(() {
     signInUsecase = MockSignIn();
     signUpUsecase = MockSignUp();
@@ -35,6 +43,17 @@ void main() {
     );
   });
 
+  // runs once! instead of setUp
+  setUpAll(() {
+    registerFallbackValue(tUpdateUserParams);
+    registerFallbackValue(tSignInParams);
+    registerFallbackValue(tSignUpParams);
+  });
+
   // after each individual test, the state gets reset
   tearDown(() => authenticationBloc.close());
+
+  test('initialState should be [AuthenticationInitial]', () {
+    expect(authenticationBloc.state, const AuthenticationInitial());
+  });
 }
