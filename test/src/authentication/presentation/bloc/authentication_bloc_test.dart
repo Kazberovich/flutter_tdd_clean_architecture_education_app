@@ -118,4 +118,58 @@ void main() {
       },
     );
   });
+
+  group('SignUpEvent', () {
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, SignedUp] when SignUpEvent is added '
+          'and SignUp succeeds',
+      build: () {
+        when(() => signUpUsecase(any())).thenAnswer(
+              (_) async => const Right(null),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(
+        SignUpEvent(
+          email: tSignUpParams.email,
+          password: tSignUpParams.password,
+          name: tSignUpParams.fullName,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        const SignedUp(),
+      ],
+      verify: (_) {
+        verify(() => signUpUsecase(tSignUpParams)).called(1);
+        verifyNoMoreInteractions(signUpUsecase);
+      },
+    );
+
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, AuthError] when SignUpEvent is added and '
+          'SignUp fails',
+      build: () {
+        when(() => signUpUsecase(any())).thenAnswer(
+              (_) async => Left(tServerFailure),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(
+        SignUpEvent(
+          email: tSignUpParams.email,
+          password: tSignUpParams.password,
+          name: tSignUpParams.fullName,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        AuthenticationError(tServerFailure.errorMessage),
+      ],
+      verify: (_) {
+        verify(() => signUpUsecase(tSignUpParams)).called(1);
+        verifyNoMoreInteractions(signUpUsecase);
+      },
+    );
+  });
 }

@@ -30,6 +30,7 @@ class AuthenticationBloc
       emit(const AuthenticationLoading());
     });
     on<SignInEvent>(_signInHandler);
+    on<SignUpEvent>(_signUpHandler);
   }
 
   final SignInUsecase _signInUsecase;
@@ -47,6 +48,23 @@ class AuthenticationBloc
     result.fold(
       (failure) => emit(AuthenticationError(failure.errorMessage)),
       (user) => emit(SignedIn(user)),
+    );
+  }
+
+  Future<void> _signUpHandler(
+    SignUpEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    final result = await _signUpUsecase(
+      SignUpParams(
+        email: event.email,
+        fullName: event.name,
+        password: event.password,
+      ),
+    );
+    result.fold(
+      (failure) => emit(AuthenticationError(failure.errorMessage)),
+      (_) => emit(const SignedUp()),
     );
   }
 }
