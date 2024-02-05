@@ -214,4 +214,56 @@ void main() {
       },
     );
   });
+
+  group('UpdateUserEvent', () {
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, UserUpdated] when UpdateUserEvent is added '
+      'and UpdateUser succeeds',
+      build: () {
+        when(() => updateUserUsecase(any())).thenAnswer(
+          (_) async => const Right(null),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(
+        UpdateUserEvent(
+          action: tUpdateUserParams.action,
+          userData: tUpdateUserParams.userData,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        const UserUpdated(),
+      ],
+      verify: (_) {
+        verify(() => updateUserUsecase(tUpdateUserParams)).called(1);
+        verifyNoMoreInteractions(updateUserUsecase);
+      },
+    );
+
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, AuthError] when UpdateUserEvent is added and '
+      'UpdateUser fails',
+      build: () {
+        when(() => updateUserUsecase(any())).thenAnswer(
+          (_) async => Left(tServerFailure),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(
+        UpdateUserEvent(
+          action: tUpdateUserParams.action,
+          userData: tUpdateUserParams.userData,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        AuthenticationError(tServerFailure.errorMessage),
+      ],
+      verify: (_) {
+        verify(() => updateUserUsecase(tUpdateUserParams)).called(1);
+        verifyNoMoreInteractions(updateUserUsecase);
+      },
+    );
+  });
 }
