@@ -2,6 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tdd_education_app/core/errors/failures.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/forgot_password.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/sign_in.dart';
@@ -60,31 +61,61 @@ void main() {
     expect(authenticationBloc.state, const AuthenticationInitial());
   });
 
+  final tServerFailure = ServerFailure(
+    message: 'user-not-found',
+    statusCode: 'there is no user record corresponding to this identifier. '
+        'The user may have been deleted',
+  );
+
   group('SignInEvent', () {
     const tUser = LocalUserModel.empty();
     blocTest<AuthenticationBloc, AuthenticationState>(
-        'should emit [AuthenticationLoading, SignedIn] '
-        'when [SignInEvent] is added',
-        build: () {
-          when(() => signInUsecase(any()))
-              .thenAnswer((_) async => const Right(tUser));
-          return authenticationBloc;
+      'should emit [AuthenticationLoading, SignedIn] '
+      'when [SignInEvent] is added successful',
+      build: () {
+        when(() => signInUsecase(any()))
+            .thenAnswer((_) async => const Right(tUser));
+        return authenticationBloc;
 
-          // act
-        },
-        act: (bloc) => bloc.add(
-              SignInEvent(
-                email: tSignInParams.email,
-                password: tSignInParams.password,
-              ),
-            ),
-        expect: () => [
-              const AuthenticationLoading(),
-              const SignedIn(tUser),
-            ],
-        verify: (_) {
-          verify(() => signInUsecase(tSignInParams)).called(1);
-          verifyNoMoreInteractions(signInUsecase);
-        });
+        // act
+      },
+      act: (bloc) => bloc.add(
+        SignInEvent(
+          email: tSignInParams.email,
+          password: tSignInParams.password,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        const SignedIn(tUser),
+      ],
+      verify: (_) {
+        verify(() => signInUsecase(tSignInParams)).called(1);
+        verifyNoMoreInteractions(signInUsecase);
+      },
+    );
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthenticationLoading, AuthenticationError] '
+      'when SignIn fails',
+      build: () {
+        when(() => signInUsecase(any()))
+            .thenAnswer((_) async => Left(tServerFailure));
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(
+        SignInEvent(
+          email: tSignInParams.email,
+          password: tSignInParams.password,
+        ),
+      ),
+      expect: () => [
+        const AuthenticationLoading(),
+        AuthenticationError(tServerFailure.errorMessage),
+      ],
+      verify: (_) {
+        verify(() => signInUsecase(tSignInParams)).called(1);
+        verifyNoMoreInteractions(signInUsecase);
+      },
+    );
   });
 }

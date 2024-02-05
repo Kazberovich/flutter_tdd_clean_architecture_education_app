@@ -45,7 +45,7 @@ class AuthenticationBloc
       SignInParams(email: event.email, password: event.password),
     );
     result.fold(
-      (failure) => null,
+      (failure) => emit(AuthenticationError(failure.errorMessage)),
       (user) => emit(SignedIn(user)),
     );
   }
