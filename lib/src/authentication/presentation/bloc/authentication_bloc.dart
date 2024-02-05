@@ -26,11 +26,27 @@ class AuthenticationBloc
         _forgotPasswordUsecase = forgotPasswordUsecase,
         _updateUserUsecase = updateUserUsecase,
         super(const AuthenticationInitial()) {
-    on<AuthenticationEvent>((event, emit) {});
+    on<AuthenticationEvent>((event, emit) {
+      emit(const AuthenticationLoading());
+    });
+    on<SignInEvent>(_signInHandler);
   }
 
   final SignInUsecase _signInUsecase;
   final SignUpUsecase _signUpUsecase;
   final UpdateUserUsecase _updateUserUsecase;
   final ForgotPasswordUsecase _forgotPasswordUsecase;
+
+  Future<void> _signInHandler(
+    SignInEvent event,
+    Emitter<AuthenticationState> emit,
+  ) async {
+    final result = await _signInUsecase(
+      SignInParams(email: event.email, password: event.password),
+    );
+    result.fold(
+      (failure) => null,
+      (user) => emit(SignedIn(user)),
+    );
+  }
 }

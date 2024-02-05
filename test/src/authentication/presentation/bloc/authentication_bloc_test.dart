@@ -1,5 +1,8 @@
+import 'package:bloc_test/bloc_test.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/forgot_password.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/sign_in.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/sign_up.dart';
@@ -55,5 +58,33 @@ void main() {
 
   test('initialState should be [AuthenticationInitial]', () {
     expect(authenticationBloc.state, const AuthenticationInitial());
+  });
+
+  group('SignInEvent', () {
+    const tUser = LocalUserModel.empty();
+    blocTest<AuthenticationBloc, AuthenticationState>(
+        'should emit [AuthenticationLoading, SignedIn] '
+        'when [SignInEvent] is added',
+        build: () {
+          when(() => signInUsecase(any()))
+              .thenAnswer((_) async => const Right(tUser));
+          return authenticationBloc;
+
+          // act
+        },
+        act: (bloc) => bloc.add(
+              SignInEvent(
+                email: tSignInParams.email,
+                password: tSignInParams.password,
+              ),
+            ),
+        expect: () => [
+              const AuthenticationLoading(),
+              const SignedIn(tUser),
+            ],
+        verify: (_) {
+          verify(() => signInUsecase(tSignInParams)).called(1);
+          verifyNoMoreInteractions(signInUsecase);
+        });
   });
 }
