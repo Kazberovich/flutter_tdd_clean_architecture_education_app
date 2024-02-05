@@ -122,10 +122,10 @@ void main() {
   group('SignUpEvent', () {
     blocTest<AuthenticationBloc, AuthenticationState>(
       'should emit [AuthLoading, SignedUp] when SignUpEvent is added '
-          'and SignUp succeeds',
+      'and SignUp succeeds',
       build: () {
         when(() => signUpUsecase(any())).thenAnswer(
-              (_) async => const Right(null),
+          (_) async => const Right(null),
         );
         return authenticationBloc;
       },
@@ -148,10 +148,10 @@ void main() {
 
     blocTest<AuthenticationBloc, AuthenticationState>(
       'should emit [AuthLoading, AuthError] when SignUpEvent is added and '
-          'SignUp fails',
+      'SignUp fails',
       build: () {
         when(() => signUpUsecase(any())).thenAnswer(
-              (_) async => Left(tServerFailure),
+          (_) async => Left(tServerFailure),
         );
         return authenticationBloc;
       },
@@ -169,6 +169,48 @@ void main() {
       verify: (_) {
         verify(() => signUpUsecase(tSignUpParams)).called(1);
         verifyNoMoreInteractions(signUpUsecase);
+      },
+    );
+  });
+
+  group('ForgotPasswordEvent', () {
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, ForgotPasswordSent] when ForgotPasswordEvent '
+      'is added and ForgotPassword succeeds',
+      build: () {
+        when(() => forgotPasswordUsecase(any())).thenAnswer(
+          (_) async => const Right(null),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(const ForgotPasswordEvent(email: 'email')),
+      expect: () => [
+        const AuthenticationLoading(),
+        const ForgotPasswordSent(),
+      ],
+      verify: (_) {
+        verify(() => forgotPasswordUsecase('email')).called(1);
+        verifyNoMoreInteractions(forgotPasswordUsecase);
+      },
+    );
+
+    blocTest<AuthenticationBloc, AuthenticationState>(
+      'should emit [AuthLoading, AuthError] when ForgotPasswordEvent is added '
+      'and ForgotPassword fails',
+      build: () {
+        when(() => forgotPasswordUsecase(any())).thenAnswer(
+          (_) async => Left(tServerFailure),
+        );
+        return authenticationBloc;
+      },
+      act: (bloc) => bloc.add(const ForgotPasswordEvent(email: 'email')),
+      expect: () => [
+        const AuthenticationLoading(),
+        AuthenticationError(tServerFailure.errorMessage),
+      ],
+      verify: (_) {
+        verify(() => forgotPasswordUsecase('email')).called(1);
+        verifyNoMoreInteractions(forgotPasswordUsecase);
       },
     );
   });
