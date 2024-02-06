@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tdd_education_app/core/extensions/context_extension.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -12,6 +13,15 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Placeholder(
+      child: Center(
+        child: Text(
+          'SIGN IN SCREEN',
+          style: context.theme.textTheme.bodyLarge?.copyWith(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -38,7 +38,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             if (state is OnboardingStatus && !state.isFirstTimer) {
               Navigator.pushReplacementNamed(context, '/home');
             } else if (state is UserCached) {
-              // TODO(User-cached-handler): push to the appropriate screen
+              Navigator.pushReplacementNamed(context, '/');
             }
           },
           builder: (context, state) {
