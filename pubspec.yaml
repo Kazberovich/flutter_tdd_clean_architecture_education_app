@@ -32,11 +32,14 @@ dependencies:
   url_launcher: ^6.2.3
   youtube_metadata: ^1.0.1
   video_thumbnail: ^0.5.3
-  firebase_core: ^2.24.2
-  firebase_auth: ^4.16.0
-  cloud_firestore: ^4.14.0
-  firebase_storage: ^11.6.0
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
+  cloud_firestore: ^4.15.4
+  firebase_storage: ^11.6.5
   firebase_ui_auth: ^1.7.0
+
+dependency_overrides:
+  firebase_auth: "4.12.0"
 
 dev_dependencies:
   flutter_test:
