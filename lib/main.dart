@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // TODO(sergey): remove-once_logout-is-implemented.
+  // TODO(sergey): message, https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled.
+  //await FirebaseAuth.instance.signOut();
   await init();
   runApp(const MyApp());
 }
