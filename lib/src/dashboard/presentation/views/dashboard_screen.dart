@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';

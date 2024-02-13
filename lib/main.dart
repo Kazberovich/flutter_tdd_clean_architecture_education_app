@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart' as uiauth;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
@@ -8,12 +9,14 @@ import 'package:tdd_education_app/core/res/fonts.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/services/router.dart';
 import 'package:tdd_education_app/firebase_options.dart';
+import 'package:tdd_education_app/src/dashboard/providers/dashboard_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  uiauth.FirebaseUIAuth.configureProviders([uiauth.EmailAuthProvider()]);
   // TODO(sergey): remove-once_logout-is-implemented.
   // TODO(sergey): message, https://stackoverflow.com/questions/4747404/delete-keychain-items-when-an-app-is-uninstalled.
   //await FirebaseAuth.instance.signOut();
@@ -27,9 +30,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      // the user will be provided globally for the whole application
-      create: (_) => UserProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => DashboardController()),
+      ],
       child: MaterialApp(
         title: 'Flutter TDD Education App',
         theme: ThemeData(
