@@ -13,13 +13,13 @@ class PersistentView extends StatefulWidget {
 
 class _PersistentViewState extends State<PersistentView>
     with AutomaticKeepAliveClientMixin {
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
     return widget.body ?? context.watch<TabNavigator>().currentPage.child;
   }
 
   @override
-  bool get wantKeepAlive => throw UnimplementedError();
+  bool get wantKeepAlive => true;
 }
