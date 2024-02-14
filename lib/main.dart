@@ -9,7 +9,8 @@ import 'package:tdd_education_app/core/res/fonts.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/services/router.dart';
 import 'package:tdd_education_app/firebase_options.dart';
-import 'package:tdd_education_app/src/dashboard/providers/dashboard_controller.dart';
+import 'package:tdd_education_app/src/dashboard/presentation/providers/dashboard_controller.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

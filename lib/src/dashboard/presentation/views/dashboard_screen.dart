@@ -5,8 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
-import 'package:tdd_education_app/src/dashboard/providers/dashboard_controller.dart';
-import 'package:tdd_education_app/src/dashboard/utils/dashboard_utils.dart';
+
+import 'package:tdd_education_app/src/dashboard/presentation/providers/dashboard_controller.dart';
+import 'package:tdd_education_app/src/dashboard/presentation/utils/dashboard_utils.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
