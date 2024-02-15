@@ -29,7 +29,7 @@ class LocalUserModel extends LocalUser {
           email: map['email'] as String,
           points: (map['points'] as num).toInt(),
           fullName: map['fullName'] as String,
-          profilePicture: map['profilePic'] as String?,
+          profilePicture: map['profilePicture'] as String?,
           bio: map['bio'] as String?,
           groupIds: (map['groupIds'] as List<dynamic>).cast<String>(),
           enrolledCourseIds:

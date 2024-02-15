@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/tab_navigator.dart';
 import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
 import 'package:tdd_education_app/src/authentication/domain/entities/user.dart';
-import 'package:tdd_education_app/src/dashboard/providers/dashboard_controller.dart';
 
 extension ContextExtension on BuildContext {
   ThemeData get theme => Theme.of(this);
