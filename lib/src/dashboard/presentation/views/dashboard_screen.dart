@@ -35,6 +35,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       stream: DashboardUtils.userDataStream,
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data is LocalUserModel) {
+          debugPrint(snapshot.data.toString());
           context.read<UserProvider>().user = snapshot.data;
         }
         return Consumer<DashboardController>(
