@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
+import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
@@ -84,7 +85,11 @@ class _EditProfileViewState extends State<EditProfileView> {
       },
       builder: (context, state) {
         return Scaffold(
-
+          extendBodyBehindAppBar: true,
+          backgroundColor: Colors.white,
+          appBar: AppBar(
+            leading: const NestedBackButton(),
+          ),
           body: GradientBackground(
             image: MediaRes.profileGradientBackground,
             child: ListView(),
