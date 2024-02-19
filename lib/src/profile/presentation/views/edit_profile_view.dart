@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -100,6 +101,62 @@ class _EditProfileViewState extends State<EditProfileView> {
                 onPressed: () {
                   if (nothingChanged) context.pop();
 
+                  final bloc = context.read<AuthenticationBloc>();
+
+                  if (passwordChanged) {
+                    if (oldPasswordController.text.isEmpty) {
+                      CoreUtils.showSnackBar(
+                        context,
+                        'Please enter your old password',
+                      );
+                      return;
+                    }
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.password,
+                        userData: jsonEncode({
+                          'oldPassword': oldPasswordController.text.trim(),
+                          'newPassword': passwordController.text.trim(),
+                        }),
+                      ),
+                    );
+                  }
+
+                  if (nameChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.displayName,
+                        userData: fullNameController.text.trim(),
+                      ),
+                    );
+                  }
+
+                  if (emailChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.email,
+                        userData: emailController.text.trim(),
+                      ),
+                    );
+                  }
+
+                  if (bioChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.bio,
+                        userData: bioController.text.trim(),
+                      ),
+                    );
+                  }
+
+                  if (imageChanged) {
+                    bloc.add(
+                      UpdateUserEvent(
+                        action: UpdateUserAction.profilePicture,
+                        userData: pickedImage,
+                      ),
+                    );
+                  }
                 },
                 child: state is AuthenticationLoading
                     ? const Center(child: CircularProgressIndicator())
