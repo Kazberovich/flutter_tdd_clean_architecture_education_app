@@ -58,7 +58,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   void initState() {
     fullNameController.text = context.currentUser!.fullName.trim();
     bioController.text = context.currentUser!.bio?.trim() ?? '';
-
     super.initState();
   }
 
@@ -89,6 +88,41 @@ class _EditProfileViewState extends State<EditProfileView> {
           backgroundColor: Colors.white,
           appBar: AppBar(
             leading: const NestedBackButton(),
+            title: const Text(
+              'Edit Profile',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 24,
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  if (nothingChanged) context.pop();
+
+                },
+                child: state is AuthenticationLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : StatefulBuilder(
+                        builder: (_, refresh) {
+                          fullNameController.addListener(() => refresh(() {}));
+                          emailController.addListener(() => refresh(() {}));
+                          passwordController.addListener(() => refresh(() {}));
+                          bioController.addListener(() => refresh(() {}));
+                          return Text(
+                            'Done',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              fontSize: 16,
+                              color: nothingChanged
+                                  ? Colors.grey
+                                  : Colors.blueAccent,
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
           ),
           body: GradientBackground(
             image: MediaRes.profileGradientBackground,
