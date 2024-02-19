@@ -1,8 +1,13 @@
 import 'dart:io';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/res/media_resources.dart';
+import 'package:tdd_education_app/core/utils/core_utils.dart';
+import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
@@ -68,6 +73,24 @@ class _EditProfileViewState extends State<EditProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is UserUpdated) {
+          CoreUtils.showSnackBar(context, 'Profile updated Successfully');
+          context.pop();
+        } else if (state is AuthenticationError) {
+          CoreUtils.showSnackBar(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        return Scaffold(
+
+          body: GradientBackground(
+            image: MediaRes.profileGradientBackground,
+            child: ListView(),
+          ),
+        );
+      },
+    );
   }
 }
