@@ -183,7 +183,61 @@ class _EditProfileViewState extends State<EditProfileView> {
           ),
           body: GradientBackground(
             image: MediaRes.profileGradientBackground,
-            child: ListView(),
+            child: ListView(
+              children: [
+                Builder(
+                  builder: (context) {
+                    final user = context.currentUser!;
+                    final userImage = user.profilePicture == null ||
+                            user.profilePicture!.isEmpty
+                        ? null
+                        : user.profilePicture;
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          fit: BoxFit.contain,
+                          image: pickedImage != null
+                              ? FileImage(pickedImage!)
+                              : userImage != null
+                                  ? NetworkImage(userImage)
+                                  : const AssetImage(MediaRes.user)
+                                      as ImageProvider,
+                        ),
+                      ),
+                      child: Stack(
+                        alignment: AlignmentDirectional.center,
+                        children: [
+                          Container(
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.black.withOpacity(.5),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: pickImage,
+                            icon: Icon(
+                              (pickedImage != null ||
+                                      user.profilePicture != null)
+                                  ? Icons.edit
+                                  : Icons.add_a_photo,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+              ],
+            ),
           ),
         );
       },
