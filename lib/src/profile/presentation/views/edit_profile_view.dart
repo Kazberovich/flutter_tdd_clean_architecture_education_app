@@ -188,6 +188,8 @@ class _EditProfileViewState extends State<EditProfileView> {
                 Builder(
                   builder: (context) {
                     final user = context.currentUser!;
+                    debugPrint(user.toString());
+                    debugPrint(user.profilePicture);
                     final userImage = user.profilePicture == null ||
                             user.profilePicture!.isEmpty
                         ? null
