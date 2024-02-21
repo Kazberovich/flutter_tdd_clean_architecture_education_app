@@ -11,6 +11,7 @@ import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:tdd_education_app/src/profile/presentation/widgets/edit_profile_form.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
@@ -247,7 +248,16 @@ class _EditProfileViewState extends State<EditProfileView> {
                     style: TextStyle(fontSize: 14, color: Color(0xFF777E90)),
                   ),
                 ),
-                const SizedBox(height: 30,),
+                const SizedBox(
+                  height: 30,
+                ),
+                EditProfileForm(
+                  fullNameController: fullNameController,
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  oldPasswordController: oldPasswordController,
+                  bioController: bioController,
+                ),
               ],
             ),
           ),
