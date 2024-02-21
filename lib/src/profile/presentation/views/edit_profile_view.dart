@@ -7,6 +7,7 @@ import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
@@ -235,9 +236,18 @@ class _EditProfileViewState extends State<EditProfileView> {
                     );
                   },
                 ),
-                const SizedBox(
-                  height: 16,
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
+                  child: Text(
+                    'We recommend an image of at least 400x400',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: Color(0xFF777E90)),
+                  ),
                 ),
+                const SizedBox(height: 30,),
               ],
             ),
           ),
