@@ -9,6 +9,9 @@ import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:provider/provider.dart';
 import 'package:iconly/iconly.dart';
+import 'package:tdd_education_app/core/services/injection_container.dart';
+import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:tdd_education_app/src/profile/presentation/views/edit_profile_view.dart';
 
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfileAppBar({super.key});
@@ -33,7 +36,12 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
                   color: Colours.neutralTextColour,
                 ),
               ),
-              onTap: () => context.push(const Placeholder()),
+              onTap: () => context.push(
+                BlocProvider(
+                  create: (_) => serviceLocator<AuthenticationBloc>(),
+                  child: const EditProfileView(),
+                ),
+              ),
             ),
             PopupMenuItem<void>(
               child: const PopupItem(
@@ -55,7 +63,6 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               onTap: () => context.push(const Placeholder()),
             ),
-
             PopupMenuItem<void>(
               padding: EdgeInsets.zero,
               height: 3,
