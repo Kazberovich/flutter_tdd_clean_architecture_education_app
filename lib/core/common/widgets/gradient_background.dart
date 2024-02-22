@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lottie/lottie.dart';
-
-import 'package:tdd_education_app/core/res/media_resources.dart';
 
 class GradientBackground extends StatelessWidget {
   const GradientBackground({

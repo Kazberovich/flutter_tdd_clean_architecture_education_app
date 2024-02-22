@@ -1,11 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' as fauth;
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart' as fui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
 import 'package:tdd_education_app/core/common/views/page_under_construction.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';

@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
 import 'package:tdd_education_app/core/enums/update_user.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
-import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
