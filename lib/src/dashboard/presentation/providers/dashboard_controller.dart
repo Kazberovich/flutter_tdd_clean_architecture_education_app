@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/tab_navigator.dart';
 import 'package:tdd_education_app/core/common/views/persistent_view.dart';
-import 'package:tdd_education_app/core/services/injection_container.dart';
-import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:tdd_education_app/src/profile/presentation/views/profile_view.dart';
 
 class DashboardController extends ChangeNotifier {
