@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:tdd_education_app/core/common/features/course/data/course_model.dart';
+import 'package:tdd_education_app/core/common/features/course/data/models/course_model.dart';
 import 'package:tdd_education_app/core/common/features/course/domain/entities/course.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 
