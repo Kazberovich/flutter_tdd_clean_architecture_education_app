@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:tdd_education_app/core/common/features/course/data/datasources/course_remote_datasource.dart';
 import 'package:tdd_education_app/core/common/features/course/domain/entities/course.dart';
 import 'package:tdd_education_app/core/common/features/course/domain/repositories/course_repository.dart';
@@ -10,8 +11,8 @@ class CourseRepositoryImplementation implements CourseRepository {
 
   @override
   ResultFuture<void> addCourse(Course course) async {
-    // TODO: implement addCourse
-    throw UnimplementedError();
+    await remoteDataSource.addCourse(course);
+    return const Right(null);
   }
 
   @override
