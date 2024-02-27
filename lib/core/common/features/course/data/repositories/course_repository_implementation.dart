@@ -23,7 +23,11 @@ class CourseRepositoryImplementation implements CourseRepository {
 
   @override
   ResultFuture<List<Course>> getCourses() async {
-    final result = await remoteDataSource.getCourses();
-    return Right(result);
+    try {
+      final result = await remoteDataSource.getCourses();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure.fromException(e));
+    }
   }
 }

@@ -68,5 +68,20 @@ void main() {
       verify(() => remoteDataSource.getCourses()).called(1);
       verifyNoMoreInteractions(remoteDataSource);
     });
+
+    test(
+        'should return [ServerFailure] when call '
+        'to remote source is unsuccessful', () async {
+      when(() => remoteDataSource.getCourses()).thenThrow(tException);
+
+      final result = await repositoryImplementation.getCourses();
+      expect(
+        result,
+        Left<Failure, void>(ServerFailure.fromException(tException)),
+      );
+
+      verify(() => remoteDataSource.getCourses()).called(1);
+      verifyNoMoreInteractions(remoteDataSource);
+    });
   });
 }
