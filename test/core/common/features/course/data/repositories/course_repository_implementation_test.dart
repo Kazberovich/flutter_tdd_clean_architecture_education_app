@@ -54,4 +54,19 @@ void main() {
       verifyNoMoreInteractions(remoteDataSource);
     });
   });
+
+  group('getCourses', () {
+    test(
+        'should return [List<Course>] when call to remote source is successful',
+        () async {
+      when(() => remoteDataSource.getCourses()).thenAnswer(
+        (invocation) async => [tCourse],
+      );
+
+      final result = await repositoryImplementation.getCourses();
+      expect(result, isA<Right<dynamic, List<Course>>>());
+      verify(() => remoteDataSource.getCourses()).called(1);
+      verifyNoMoreInteractions(remoteDataSource);
+    });
+  });
 }

@@ -23,7 +23,7 @@ class CourseRepositoryImplementation implements CourseRepository {
 
   @override
   ResultFuture<List<Course>> getCourses() async {
-    // TODO: implement getCourses
-    throw UnimplementedError();
+    final result = await remoteDataSource.getCourses();
+    return Right(result);
   }
 }
