@@ -6,7 +6,7 @@ import 'package:tdd_education_app/core/common/features/course/data/models/course
 import 'package:tdd_education_app/core/common/features/course/domain/entities/course.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 
-import '../../../../../fixtures/fixture_reader.dart';
+import '../../../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final timestampData = {
