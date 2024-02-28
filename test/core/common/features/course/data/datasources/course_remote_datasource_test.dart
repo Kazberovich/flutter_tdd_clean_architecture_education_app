@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -60,7 +58,7 @@ void main() {
       expect(groupRef.data()['id'], groupRef.id);
 
       expect(courseRef.data()['groupId'], groupRef.id);
-      expect(courseRef.data()['courseId'], courseRef.id);
+      expect(groupRef.data()['courseId'], courseRef.id);
     });
   });
 }
