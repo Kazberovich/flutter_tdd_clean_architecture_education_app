@@ -61,4 +61,31 @@ void main() {
       expect(groupRef.data()['courseId'], courseRef.id);
     });
   });
+
+  group('getCourses', () {
+    test('should return a List<Course> when the call is successful', () async {
+      // Arrange
+      final firstDate = DateTime.now();
+      final secondDate = DateTime.now().add(const Duration(seconds: 20));
+
+      final expectedCourses = [
+        CourseModel.empty().copyWith(createdAt: firstDate),
+        CourseModel.empty().copyWith(
+          createdAt: secondDate,
+          id: '1',
+          title: 'Course 1',
+        ),
+      ];
+
+      for (final course in expectedCourses) {
+        await firestore.collection('courses').add(course.toMap());
+      }
+
+      // Act
+      final result = await remoteDataSource.getCourses();
+
+      // Assert
+      expect(result, expectedCourses);
+    });
+  });
 }

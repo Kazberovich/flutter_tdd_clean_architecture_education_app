@@ -31,48 +31,81 @@ class CourseRemoteDataSourceImplementation implements CourseRemoteDataSource {
 
   @override
   Future<void> addCourse(Course course) async {
-    final user = _firebaseAuth.currentUser;
-    if (user == null) {
-      throw const ServerException(
-        message: 'User is not authenticated',
-        statusCode: '401',
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user == null) {
+        throw const ServerException(
+          message: 'User is not authenticated',
+          statusCode: '401',
+        );
+      }
+      final courseRef = _firebaseFirestore.collection('courses').doc();
+      final groupRef = _firebaseFirestore.collection('groups').doc();
+
+      var courseModel = (course as CourseModel).copyWith(
+        id: courseRef.id,
+        groupId: groupRef.id,
       );
+
+      if (courseModel.imageIsFile) {
+        final imageRef = _firebaseStorage.ref().child(
+              'courses/${courseModel.id}/profile_image/${courseModel.title}-pfp',
+            );
+
+        await imageRef.putFile(File(courseModel.image!)).then((value) async {
+          final url = await value.ref.getDownloadURL();
+          courseModel = courseModel.copyWith(image: url);
+        });
+      }
+
+      await courseRef.set(courseModel.toMap());
+
+      final group = GroupModel(
+        id: groupRef.id,
+        name: course.title,
+        members: const [],
+        courseId: courseRef.id,
+        groupImageUrl: courseModel.image,
+      );
+
+      return groupRef.set(group.toMap());
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occured',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
     }
-    final courseRef = _firebaseFirestore.collection('courses').doc();
-    final groupRef = _firebaseFirestore.collection('groups').doc();
-
-    var courseModel = (course as CourseModel).copyWith(
-      id: courseRef.id,
-      groupId: groupRef.id,
-    );
-
-    if (courseModel.imageIsFile) {
-      final imageRef = _firebaseStorage.ref().child(
-            'courses/${courseModel.id}/profile_image/${courseModel.title}-pfp',
-          );
-
-      await imageRef.putFile(File(courseModel.image!)).then((value) async {
-        final url = await value.ref.getDownloadURL();
-        courseModel = courseModel.copyWith(image: url);
-      });
-    }
-
-    await courseRef.set(courseModel.toMap());
-
-    final group = GroupModel(
-      id: groupRef.id,
-      name: course.title,
-      members: const [],
-      courseId: courseRef.id,
-      groupImageUrl: courseModel.image,
-    );
-
-    return groupRef.set(group.toMap());
   }
 
   @override
   Future<List<CourseModel>> getCourses() {
-    // TODO: implement getCourses
-    throw UnimplementedError();
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user == null) {
+        throw const ServerException(
+          message: 'User is not authenticated',
+          statusCode: '401',
+        );
+      }
+
+      return _firebaseFirestore.collection('courses').get().then(
+            (value) => value.docs
+                .map((document) => CourseModel.fromMap(document.data()))
+                .toList(),
+          );
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 }
