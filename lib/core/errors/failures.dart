@@ -14,7 +14,7 @@ abstract class Failure extends Equatable {
 
   String get errorMessage {
     final showErrorText =
-        statusCode! is String || int.tryParse(statusCode as String) != null;
+        statusCode is! String || int.tryParse(statusCode as String) != null;
     return '$statusCode${showErrorText ? ' Error' : ''} : $message';
   }
 

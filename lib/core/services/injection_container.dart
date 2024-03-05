@@ -11,6 +11,12 @@ import 'package:tdd_education_app/src/authentication/domain/usecases/sign_in.dar
 import 'package:tdd_education_app/src/authentication/domain/usecases/sign_up.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/update_user.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:tdd_education_app/src/course/data/datasources/course_remote_datasource.dart';
+import 'package:tdd_education_app/src/course/data/repositories/course_repository_implementation.dart';
+import 'package:tdd_education_app/src/course/domain/repositories/course_repository.dart';
+import 'package:tdd_education_app/src/course/domain/usecases/add_course.dart';
+import 'package:tdd_education_app/src/course/domain/usecases/get_courses.dart';
+import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
 import 'package:tdd_education_app/src/onboarding/data/repositories/onboarding_repository_implementation.dart';
 import 'package:tdd_education_app/src/onboarding/domain/repositories/onboarding_repository.dart';
