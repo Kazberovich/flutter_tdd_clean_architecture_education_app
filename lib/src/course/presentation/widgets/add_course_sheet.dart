@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/widgets/titled_input_field.dart';
+import 'package:tdd_education_app/core/utils/constants.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
+import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 
 class AddCourseSheet extends StatefulWidget {
@@ -61,6 +63,7 @@ class _AddCourseSheetState extends State<AddCourseSheet> {
             Navigator.pop(context);
           }
           CoreUtils.showSnackBar(context, 'Course added successfully');
+          Navigator.pop(context);
           // CoreUtils.showLoadingDialog(context);
           // TODO(Add-Course): Send Notifications
         }
@@ -124,6 +127,40 @@ class _AddCourseSheetState extends State<AddCourseSheet> {
                   ),
                 ),
                 const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            final now = DateTime.now();
+                            final course = CourseModel.empty().copyWith(
+                              title: titleController.text.trim(),
+                              description: descriptionController.text.trim(),
+                              image: imageController.text.trim().isEmpty
+                                  ? kDefaultAvatar
+                                  : isFile
+                                      ? image!.path
+                                      : imageController.text.trim(),
+                              createdAt: now,
+                              updatedAt: now,
+                              imageIsFile: isFile,
+                            );
+                            context.read<CourseCubit>().addCourse(course);
+                          }
+                        },
+                        child: const Text('Add'),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
