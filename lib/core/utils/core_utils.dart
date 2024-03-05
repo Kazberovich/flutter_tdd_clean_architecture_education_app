@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 
 class CoreUtils {
@@ -34,5 +37,14 @@ class CoreUtils {
         child: CircularProgressIndicator(),
       ),
     );
+  }
+
+  static Future<File?> pickImage() async {
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      return File(image.path);
+    } else {
+      return null;
+    }
   }
 }
