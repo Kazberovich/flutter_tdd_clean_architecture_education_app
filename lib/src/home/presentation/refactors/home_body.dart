@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/app/providers/course_of_the_day_notifier.dart';
 import 'package:tdd_education_app/core/common/views/loading_view.dart';
 import 'package:tdd_education_app/core/common/widgets/not_found_text.dart';
-import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 
