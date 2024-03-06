@@ -15,85 +15,63 @@ class TinderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        padding: isFirst ? const EdgeInsets.only(top: 65) : null,
-        color: isFirst ? Colors.red : null,
-        child: Center(
-          child: Stack(
+    return Container(
+      alignment: Alignment.bottomCenter,
+      height: 137,
+      padding: const EdgeInsets.only(left: 20),
+      decoration: BoxDecoration(
+        gradient: isFirst
+            ? const LinearGradient(
+          colors: [Color(0xFF8E96FF), Color(0xFFA06AF9)],
+        )
+            : null,
+        color: color,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(.15),
+            offset: const Offset(0, 5),
+            blurRadius: 10,
+          ),
+        ],
+      ),
+      child: isFirst
+          ? Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text(
+            '${context.courseOfTheDay?.title ?? 'Chemistry'} '
+                'final\nexams',
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const Row(
             children: [
-              Container(
-                alignment: Alignment.bottomCenter,
-                height: 137,
-                padding: const EdgeInsets.only(left: 20),
-                decoration: BoxDecoration(
-                  gradient: isFirst
-                      ? const LinearGradient(
-                          colors: [Color(0xFF8E96FF), Color(0xFFA06AF9)],
-                        )
-                      : null,
-                  color: color,
-                  borderRadius: BorderRadius.circular(24),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(.15),
-                      offset: const Offset(0, 5),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
-                child: isFirst
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            '${context.courseOfTheDay?.title ?? 'Chemistry'} '
-                            'final\nexams',
-                            textAlign: TextAlign.left,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const Row(
-                            children: [
-                              Icon(
-                                IconlyLight.notification,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 8,
-                              ),
-                              Text(
-                                '45 minutes',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : null,
+              Icon(
+                IconlyLight.notification,
+                color: Colors.white,
               ),
-              if (isFirst)
-                Positioned(
-                  bottom: 20,
-                  right: 20,
-                  child: Image.asset(
-                    MediaRes.microscope,
-                    height: 180,
-                    width: 149,
-                  ),
+              SizedBox(
+                width: 8,
+              ),
+              Text(
+                '45 minutes',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
                 ),
+              ),
             ],
           ),
-        ),
-      ),
+        ],
+      )
+          : null,
     );
   }
 }
