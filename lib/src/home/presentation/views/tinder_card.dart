@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
-import 'package:tdd_education_app/core/res/media_resources.dart';
 
 class TinderCard extends StatelessWidget {
   const TinderCard({
