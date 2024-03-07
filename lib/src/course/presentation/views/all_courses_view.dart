@@ -5,6 +5,7 @@ import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
+import 'package:tdd_education_app/src/course/presentation/views/course_details_screen.dart';
 
 class AllCoursesView extends StatelessWidget {
   const AllCoursesView({required this.courses, super.key});
@@ -48,9 +49,8 @@ class AllCoursesView extends StatelessWidget {
                       .map(
                         (course) => CourseTile(
                           course: course,
-                          // TODO(Course-Details): change to pushNamed and route
                           onTap: () => Navigator.of(context).pushNamed(
-                            '/unknown',
+                            CourseDetailsScreen.routeName,
                             arguments: course,
                           ),
                         ),
