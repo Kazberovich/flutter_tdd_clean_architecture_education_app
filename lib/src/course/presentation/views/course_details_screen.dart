@@ -48,8 +48,21 @@ class CourseDetailsScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  if(course.description != null)
+                  if (course.description != null)
                     ExpandableText(text: course.description!, context: context),
+                  if (course.numberOfMaterials > 0 ||
+                      course.numberOfVideos > 0 ||
+                      course.numberOfExams > 0) ...[
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Subject details: ',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    
+                  ],
                 ],
               ),
             ],
