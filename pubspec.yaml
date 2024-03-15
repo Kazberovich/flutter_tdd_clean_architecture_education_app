@@ -13,7 +13,9 @@ dependencies:
   bloc: ^8.1.2
   chewie: ^1.7.4
   cupertino_icons: ^1.0.2
-
+  flutter_tindercard:
+    git:
+      url: https://github.com/NonymousMorlock/flutter_tindercard.git
   dartz: ^0.10.1
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3

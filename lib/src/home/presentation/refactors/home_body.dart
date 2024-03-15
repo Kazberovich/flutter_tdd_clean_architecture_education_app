@@ -6,6 +6,9 @@ import 'package:tdd_education_app/core/common/widgets/not_found_text.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 
+import 'package:tdd_education_app/src/home/presentation/refactors/home_header.dart';
+import 'package:tdd_education_app/src/home/presentation/refactors/home_subjects.dart';
+
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
 
@@ -54,7 +57,13 @@ class _HomeBodyState extends State<HomeBody> {
             padding: const EdgeInsets.symmetric(
               horizontal: 16,
             ),
-            children: [],
+            children: [
+              const HomeHeader(),
+              const SizedBox(height: 20),
+              HomeSubjects(
+                courses: courses,
+              ),
+            ],
           );
         }
         return const SizedBox.shrink();

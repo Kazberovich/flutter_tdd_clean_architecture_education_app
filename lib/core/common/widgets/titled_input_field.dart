@@ -49,7 +49,6 @@ class TitledInputField extends StatelessWidget {
               ),
             ),
             if (suffixIcon != null) suffixIcon!,
-
           ],
         ),
         const SizedBox(height: 10),
