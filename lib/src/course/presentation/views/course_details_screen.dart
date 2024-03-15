@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tdd_education_app/core/common/widgets/course_info_tile.dart';
 import 'package:tdd_education_app/core/common/widgets/expandable_text.dart';
 import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/extensions/int_extesions.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
+import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 
 class CourseDetailsScreen extends StatelessWidget {
@@ -14,6 +17,11 @@ class CourseDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final course = (this.course as CourseModel).copyWith(
+      numberOfVideos: 2,
+      numberOfExams: 3,
+      numberOfMaterials: 24,
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
@@ -61,7 +69,45 @@ class CourseDetailsScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    
+                    if (course.numberOfVideos > 0) ...[
+                      const SizedBox(height: 10),
+                      CourseInfoTile(
+                        onTap: () => Navigator.of(context).pushNamed(
+                          '/unknown-route',
+                          arguments: course,
+                        ),
+                        image: MediaRes.courseInfoVideo,
+                        title: '${course.numberOfVideos} Video(s)',
+                        subtitle:
+                            'Watch our tutorial videos for ${course.title}',
+                      ),
+                    ],
+                    if (course.numberOfExams > 0) ...[
+                      const SizedBox(height: 10),
+                      CourseInfoTile(
+                        onTap: () => Navigator.of(context).pushNamed(
+                          '/unknown-route',
+                          arguments: course,
+                        ),
+                        image: MediaRes.examQuestions,
+                        title: '${course.numberOfExams} Exam(s)',
+                        subtitle: 'Take our exams for ${course.title}',
+                      ),
+                    ],
+                    if (course.numberOfExams > 0) ...[
+                      const SizedBox(height: 10),
+                      CourseInfoTile(
+                        onTap: () => Navigator.of(context).pushNamed(
+                          '/unknown-route',
+                          arguments: course,
+                        ),
+                        image: MediaRes.courseInfoMaterial,
+                        title: '${course.numberOfMaterials} Material(s)',
+                        subtitle:
+                            'Access to ${course.numberOfMaterials.estimate} '
+                            'materials for ${course.title}',
+                      ),
+                    ],
                   ],
                 ],
               ),
