@@ -41,8 +41,7 @@ class VideoModel extends Video {
       'title': title,
       'tutor': tutor,
       'courseId': courseId,
-      'uploadDate': uploadDate,
-      'thumbnailIsFile': thumbnailIsFile,
+      'uploadDate': FieldValue.serverTimestamp(),
     };
   }
 
