@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -62,6 +64,35 @@ void main() {
       final courseRef =
           await firestore.collection('courses').doc(tVideo.courseId).get();
       expect(courseRef.data()!['numberOfVideos'], 1);
+    });
+
+    test('should add the provided thumbnail to the storage if it is a file',
+        () async {
+      final thumbnailFile = File(
+        'assets/images/auth_gradient_background.png',
+      );
+
+      final video = tVideo.copyWith(
+        thumbnailIsFile: true,
+        thumbnail: thumbnailFile.path,
+      );
+
+      await remoteDataSource.addVideo(video);
+      final videoCollectionRef = await firestore
+          .collection('courses')
+          .doc(tVideo.courseId)
+          .collection('videos')
+          .get();
+
+      expect(videoCollectionRef.docs.length, 1);
+      final savedVideo = videoCollectionRef.docs.first.data();
+      final thumbnailUrl = await storage
+          .ref()
+          .child(
+            'courses/${tVideo.courseId}/videos/${savedVideo['id']}/thumbnail',
+          )
+          .getDownloadURL();
+      expect(savedVideo['thumbnail'], equals(thumbnailUrl));
     });
   });
 }
