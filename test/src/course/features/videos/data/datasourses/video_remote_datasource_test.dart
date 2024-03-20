@@ -9,6 +9,7 @@ import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
 import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/datasourses/video_remote_datasource.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';
+import 'package:tdd_education_app/src/course/features/videos/domain/entities/video.dart';
 
 void main() {
   late VideoRemoteDataSource remoteDataSource;
@@ -93,6 +94,24 @@ void main() {
           )
           .getDownloadURL();
       expect(savedVideo['thumbnail'], equals(thumbnailUrl));
+    });
+  });
+
+  group('getVideos', () {
+    test('should return a list of [Video] from the firestore', () async {
+      await remoteDataSource.addVideo(tVideo);
+
+      final result = await remoteDataSource.getVideos(tVideo.courseId);
+      expect(result, isA<List<Video>>());
+      expect(result.length, equals(1));
+      expect(result.first.thumbnail, equals(tVideo.thumbnail));
+    });
+
+    test('should return an empty array list when there is an error', () async {
+      final result = await remoteDataSource.getVideos(tVideo.courseId);
+
+      expect(result, isA<List<Video>>());
+      expect(result.isEmpty, isTrue);
     });
   });
 }

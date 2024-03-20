@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:tdd_education_app/core/utils/datasource_utils.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';
 import 'package:tdd_education_app/src/course/features/videos/domain/entities/video.dart';
 
@@ -30,13 +31,7 @@ class VideoRemoteDataSourceImplementation implements VideoRemoteDataSource {
   @override
   Future<void> addVideo(Video video) async {
     try {
-      final user = _auth.currentUser;
-      if (user == null) {
-        throw const ServerException(
-          message: 'User is not authenticated',
-          statusCode: '401',
-        );
-      }
+      await DataSourceUtils.authorizedUser(_auth);
 
       final videoRef = _firestore
           .collection('courses')
@@ -65,7 +60,7 @@ class VideoRemoteDataSourceImplementation implements VideoRemoteDataSource {
       });
     } on FirebaseException catch (e) {
       throw ServerException(
-        message: e.message ?? 'Unknown error occured',
+        message: e.message ?? 'Unknown error occurred',
         statusCode: e.code,
       );
     } on ServerException {
@@ -77,7 +72,25 @@ class VideoRemoteDataSourceImplementation implements VideoRemoteDataSource {
 
   @override
   Future<List<VideoModel>> getVideos(String courseId) async {
-    // TODO: implement getVideos
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+
+      final videos = await _firestore
+          .collection('courses')
+          .doc(courseId)
+          .collection('videos')
+          .get();
+
+      return videos.docs.map((doc) => VideoModel.fromMap(doc.data())).toList();
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 }
