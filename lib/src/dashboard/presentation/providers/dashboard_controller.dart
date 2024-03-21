@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/tab_navigator.dart';
 import 'package:tdd_education_app/core/common/views/persistent_view.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/home/presentation/views/home_view.dart';
 import 'package:tdd_education_app/src/profile/presentation/views/profile_view.dart';
@@ -15,8 +16,11 @@ class DashboardController extends ChangeNotifier {
     ChangeNotifierProvider(
       create: (_) => TabNavigator(
         TabItem(
-          child: BlocProvider(
-            create: (_) => serviceLocator<CourseCubit>(),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
+              BlocProvider(create: (_) => serviceLocator<VideoCubit>()),
+            ],
             child: const HomeView(),
           ),
         ),

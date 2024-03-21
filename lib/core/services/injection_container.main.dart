@@ -6,6 +6,25 @@ Future<void> init() async {
   await _initOnboarding();
   await _initAuth();
   await _initCourse();
+  await _initVideo();
+}
+
+Future<void> _initVideo() async {
+  serviceLocator
+    ..registerFactory(() =>
+        VideoCubit(addVideo: serviceLocator(), getVideos: serviceLocator()))
+    ..registerLazySingleton(() => AddVideo(serviceLocator()))
+    ..registerLazySingleton(() => GetVideos(serviceLocator()))
+    ..registerLazySingleton<VideoRepository>(
+      () => VideoRepositoryImplementation(serviceLocator()),
+    )
+    ..registerLazySingleton<VideoRemoteDataSource>(
+      () => VideoRemoteDataSourceImplementation(
+        auth: serviceLocator(),
+        firestore: serviceLocator(),
+        storage: serviceLocator(),
+      ),
+    );
 }
 
 Future<void> _initCourse() async {
