@@ -7,6 +7,28 @@ Future<void> init() async {
   await _initAuth();
   await _initCourse();
   await _initVideo();
+  await _initMaterial();
+}
+
+Future<void> _initMaterial() async {
+  serviceLocator
+    ..registerFactory(
+      () => MaterialCubit(
+        addMaterial: serviceLocator(),
+        getMaterials: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(() => AddMaterial(serviceLocator()))
+    ..registerLazySingleton(() => GetMaterials(serviceLocator()))
+    ..registerLazySingleton<MaterialRepo>(
+        () => MaterialRepoImpl(serviceLocator()))
+    ..registerLazySingleton<MaterialRemoteDataSrc>(
+      () => MaterialRemoteDataSrcImpl(
+        firestore: serviceLocator(),
+        auth: serviceLocator(),
+        storage: serviceLocator(),
+      ),
+    );
 }
 
 Future<void> _initVideo() async {
