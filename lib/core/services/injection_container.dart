@@ -16,6 +16,12 @@ import 'package:tdd_education_app/src/course/data/repositories/course_repository
 import 'package:tdd_education_app/src/course/domain/repositories/course_repository.dart';
 import 'package:tdd_education_app/src/course/domain/usecases/add_course.dart';
 import 'package:tdd_education_app/src/course/domain/usecases/get_courses.dart';
+import 'package:tdd_education_app/src/course/features/videos/data/datasourses/video_remote_datasource.dart';
+import 'package:tdd_education_app/src/course/features/videos/data/repositories/video_repository_implementation.dart';
+import 'package:tdd_education_app/src/course/features/videos/domain/repositories/video_repository.dart';
+import 'package:tdd_education_app/src/course/features/videos/domain/usecases/add_video.dart';
+import 'package:tdd_education_app/src/course/features/videos/domain/usecases/get_videos.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
 import 'package:tdd_education_app/src/onboarding/data/repositories/onboarding_repository_implementation.dart';
