@@ -13,12 +13,22 @@ class Exam extends Equatable {
     this.imageUrl,
   });
 
+  const Exam.empty()
+      : this(
+          id: 'empty.id',
+          courseId: 'empty.courseId',
+          title: 'empty.title',
+          description: 'empty.description',
+          timeLimit: 0,
+          questions: const [],
+        );
+
   final String id;
   final String courseId;
   final String title;
   final String? imageUrl;
   final String description;
-  final String timeLimit;
+  final int timeLimit;
   final List<ExamQuestion> questions;
 
   @override
