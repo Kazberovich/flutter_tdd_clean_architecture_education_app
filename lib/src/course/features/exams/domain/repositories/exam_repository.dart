@@ -11,7 +11,7 @@ abstract class ExamRepository {
 
   ResultFuture<void> uploadExam(Exam exam);
 
-  ResultFuture<void> update(Exam exam);
+  ResultFuture<void> updateExam(Exam exam);
 
   ResultFuture<void> submitExam(UserExam userExam);
 
