@@ -1007,7 +1007,7 @@ SPEC CHECKSUMS:
   FirebaseFirestoreInternal: 7ac1e0c5b4e75aeb898dfe4b1d6d77abbac9eca3
   FirebaseSharedSwift: 19b3f709993d6fa1d84941d41c01e3c4c11eab93
   FirebaseStorage: 8505bae8ac6662474b5b50e07759fb2765c15746
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
@@ -1032,6 +1032,6 @@ SPEC CHECKSUMS:
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   wakelock_plus: 8b09852c8876491e4b6d179e17dfe2a0b5f60d47
 
-PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
 COCOAPODS: 1.15.0
