@@ -1,0 +1,13 @@
+{
+  "id": "Test String",
+  "courseId": "Test String",
+  "examId": "Test String",
+  "question": "Test String",
+  "answers": [
+    {
+      "identifier": "Test String",
+      "Answer": "Test String"
+    }
+  ],
+  "correct_answer": "Test String"
+}
