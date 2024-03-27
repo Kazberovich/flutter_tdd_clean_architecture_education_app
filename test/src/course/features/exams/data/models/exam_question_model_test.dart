@@ -6,7 +6,7 @@ import 'package:tdd_education_app/src/course/features/exams/data/models/exam_que
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam_question.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/question_choice.dart';
 
-import '../../../../../fixtures/fixture_reader.dart';
+import '../../../../../../fixtures/fixture_reader.dart';
 
 void main() {
   const tExamQuestionModel = ExamQuestionModel.empty();

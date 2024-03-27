@@ -5,7 +5,7 @@ import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/question_choice_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/question_choice.dart';
 
-import '../../../../../fixtures/fixture_reader.dart';
+import '../../../../../../fixtures/fixture_reader.dart';
 
 void main() {
   const tQuestionChoiceModel = QuestionChoiceModel.empty();
