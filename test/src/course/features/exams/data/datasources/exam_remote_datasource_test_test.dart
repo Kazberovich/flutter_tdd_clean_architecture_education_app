@@ -62,6 +62,20 @@ void main() {
       expect(examDocs.docs, isNotEmpty);
       final examModel = ExamModel.fromMap(examDocs.docs.first.data());
       expect(examModel.courseId, tExam.courseId);
+
+      final questionsDocs = await firestore
+          .collection('courses')
+          .doc(examModel.courseId)
+          .collection('exams')
+          .doc(examModel.id)
+          .collection('questions')
+          .get();
+
+      expect(questionsDocs.docs, isNotEmpty);
+      final questionModel =
+          ExamQuestionModel.fromMap(questionsDocs.docs.first.data());
+      expect(questionModel.courseId, tExam.courseId);
+      expect(questionModel.examId, examModel.id);
     });
   });
 }

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tdd_education_app/core/utils/datasource_utils.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_question_model.dart';
+import 'package:tdd_education_app/src/course/features/exams/data/models/question_choice_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/user_exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/user_exam.dart';
@@ -83,6 +84,33 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
       final examToUpload = (exam as ExamModel).copyWith(id: examDocsRef.id);
       await examDocsRef.set(examToUpload.toMap());
 
+      // upload questions
+      final questions = exam.questions;
+      if (questions != null && questions.isNotEmpty) {
+        final batch = _firestore.batch();
+        for (final question in questions) {
+          final questionDocRef = examDocsRef.collection('questions').doc();
+          var questionToUpload = (question as ExamQuestionModel).copyWith(
+            id: questionDocRef.id,
+            examId: examDocsRef.id,
+            courseId: exam.courseId,
+          );
+
+          final newChoices = <QuestionChoiceModel>[];
+          for (final choice in questionToUpload.choices) {
+            final newChoice = (choice as QuestionChoiceModel)
+                .copyWith(questionId: questionDocRef.id);
+            newChoices.add(newChoice);
+          }
+          questionToUpload = questionToUpload.copyWith(choices: newChoices);
+          batch.set(questionDocRef, questionToUpload.toMap());
+        }
+        await batch.commit();
+      }
+
+      await _firestore.collection('courses').doc(exam.courseId).update({
+        'numberOfExams': FieldValue.increment(1),
+      });
     } on FirebaseException catch (e) {
       throw ServerException(
         message: e.message ?? 'Unknown error occurred',
