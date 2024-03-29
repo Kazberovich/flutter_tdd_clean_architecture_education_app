@@ -78,4 +78,35 @@ void main() {
       expect(questionModel.examId, examModel.id);
     });
   });
+
+  group('getExamQuestions', () {
+    test('should return the questions of the given exam', () async {
+      // arrange
+
+      final exam = const ExamModel.empty()
+          .copyWith(questions: [const ExamQuestionModel.empty()]);
+
+      await firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .set(CourseModel.empty().copyWith(id: exam.courseId).toMap());
+
+      await remoteDataSource.uploadExam(exam);
+
+      // act
+      final examsCollection = await firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .get();
+
+      final examModel = ExamModel.fromMap(examsCollection.docs.first.data());
+      final result = await remoteDataSource.getExamQuestions(examModel);
+
+      //assert
+      expect(result, isA<List<ExamQuestionModel>>());
+      expect(result, hasLength(1));
+      expect(result.first.courseId, exam.courseId);
+    });
+  });
 }
