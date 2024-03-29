@@ -38,7 +38,29 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
 
   @override
   Future<List<ExamQuestionModel>> getExamQuestions(Exam exam) async {
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      final result = await _firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .doc(exam.id)
+          .collection('questions')
+          .get();
+
+      return result.docs
+          .map((doc) => ExamQuestionModel.fromMap(doc.data()))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override
