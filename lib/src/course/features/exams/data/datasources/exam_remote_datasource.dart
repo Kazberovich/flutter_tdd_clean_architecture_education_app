@@ -99,14 +99,107 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
 
   @override
   Future<void> submitExam(UserExam exam) async {
-    // TODO: implement submitExam
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      final user = _auth.currentUser!;
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('courses')
+          .doc(exam.courseId)
+          .set({
+        'courseId': exam.courseId,
+        'courseName': exam.examTitle,
+      });
+
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .doc(exam.examId)
+          .set((exam as UserExamModel).toMap());
+
+      final totalPoints = exam.answers
+          .where((answer) => answer.isCorrect)
+          .fold<int>(0, (previousValue, _) => previousValue + 1);
+
+      final pointPercent = totalPoints / exam.totalQuestions;
+      final points = pointPercent * 100;
+
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .update({'points': FieldValue.increment(points)});
+
+      final userData = await _firestore.collection('users').doc(user.uid).get();
+
+      final alreadyEnrolled = (userData.data()?['enrolledCourseIds'] as List?)
+          ?.contains(exam.courseId) ??
+          false;
+
+      if (!alreadyEnrolled) {
+        await _firestore.collection('users').doc(user.uid).update({
+          'enrolledCourseIds': FieldValue.arrayUnion([exam.courseId]),
+        });
+      }
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '500',
+      );
+    }
   }
 
   @override
   Future<void> updateExam(Exam exam) async {
-    // TODO: implement updateExam
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      await _firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .doc(exam.id)
+          .update((exam as ExamModel).toMap());
+
+      // update questions
+      final questions = exam.questions;
+
+      if (questions != null && questions.isNotEmpty) {
+        final batch = _firestore.batch();
+        for (final question in questions) {
+          final questionDocRef = _firestore
+              .collection('courses')
+              .doc(exam.courseId)
+              .collection('exams')
+              .doc(exam.id)
+              .collection('questions')
+              .doc(question.id);
+          batch.update(questionDocRef, (question as ExamQuestionModel).toMap());
+        }
+        await batch.commit();
+      }
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(
+        message: e.toString(),
+        statusCode: '500',
+      );
+    }
   }
 
   @override

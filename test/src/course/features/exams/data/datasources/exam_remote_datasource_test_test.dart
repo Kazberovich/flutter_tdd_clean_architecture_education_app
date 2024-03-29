@@ -1,13 +1,15 @@
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
-import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
+import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/datasources/exam_remote_datasource.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_question_model.dart';
+import 'package:tdd_education_app/src/course/features/exams/data/models/user_choice_model.dart';
+import 'package:tdd_education_app/src/course/features/exams/data/models/user_exam_model.dart';
 
 void main() {
   late ExamRemoteDataSrc remoteDataSource;
@@ -131,5 +133,83 @@ void main() {
       expect(result, hasLength(1));
       expect(result.first.courseId, exam.courseId);
     });
+  });
+
+  group('updateExam', () {
+    test('should update the given exam', () async {
+      // arrange
+      final exam = const ExamModel.empty().copyWith(
+        questions: [const ExamQuestionModel.empty()],
+      );
+      await firestore.collection('courses').doc(exam.courseId).set(
+            CourseModel.empty().copyWith(id: exam.courseId).toMap(),
+          );
+      await remoteDataSource.uploadExam(exam);
+      // No need to assert the uploadExam method because it's already tested
+      // act
+      final examsCollection = await firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .get();
+      final examModel = ExamModel.fromMap(examsCollection.docs.first.data());
+      await remoteDataSource.updateExam(examModel.copyWith(timeLimit: 100));
+      // assert
+      final updatedExam = await firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .collection('exams')
+          .doc(examModel.id)
+          .get();
+      expect(updatedExam.data(), isNotEmpty);
+      final updatedExamModel = ExamModel.fromMap(updatedExam.data()!);
+      expect(updatedExamModel.courseId, exam.courseId);
+      expect(updatedExamModel.timeLimit, 100);
+    });
+  });
+
+  group('submitExam', () {
+    test(
+      'should submit the given exam',
+      () async {
+        // Arrange
+        final userExam = UserExamModel.empty().copyWith(
+          totalQuestions: 2,
+          answers: [const UserChoiceModel.empty()],
+        );
+        await firestore.collection('users').doc(auth.currentUser!.uid).set(
+              const LocalUserModel.empty()
+                  .copyWith(uid: auth.currentUser!.uid, points: 1)
+                  .toMap(),
+            );
+        // Act
+        await remoteDataSource.submitExam(userExam);
+
+        // Assert
+        final submittedExam = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('courses')
+            .doc(userExam.courseId)
+            .collection('exams')
+            .doc(userExam.examId)
+            .get();
+
+        expect(submittedExam.data(), isNotEmpty);
+        final submittedExamModel = UserExamModel.fromMap(submittedExam.data()!);
+        expect(submittedExamModel.courseId, userExam.courseId);
+
+        final userDoc = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .get();
+
+        expect(userDoc.data(), isNotEmpty);
+        final userModel = LocalUserModel.fromMap(userDoc.data()!);
+        expect(userModel.points, 51);
+
+        expect(userModel.enrolledCourseIds, contains(userExam.courseId));
+      },
+    );
   });
 }
