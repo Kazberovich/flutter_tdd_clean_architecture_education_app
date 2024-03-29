@@ -109,4 +109,27 @@ void main() {
       expect(result.first.courseId, exam.courseId);
     });
   });
+
+  group('getExams', () {
+    test('should return the exams of the given course', () async {
+      // arrange
+      final exam = const ExamModel.empty()
+          .copyWith(questions: [const ExamQuestionModel.empty()]);
+
+      await firestore
+          .collection('courses')
+          .doc(exam.courseId)
+          .set(CourseModel.empty().copyWith(id: exam.courseId).toMap());
+
+      await remoteDataSource.uploadExam(exam);
+
+      // act
+      final result = await remoteDataSource.getExams(exam.courseId);
+
+      // assert
+      expect(result, isA<List<ExamModel>>());
+      expect(result, hasLength(1));
+      expect(result.first.courseId, exam.courseId);
+    });
+  });
 }
