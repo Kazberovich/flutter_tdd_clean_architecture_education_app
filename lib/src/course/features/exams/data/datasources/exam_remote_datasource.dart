@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tdd_education_app/core/errors/exceptions.dart';
 import 'package:tdd_education_app/core/utils/datasource_utils.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_question_model.dart';
@@ -7,8 +8,6 @@ import 'package:tdd_education_app/src/course/features/exams/data/models/question
 import 'package:tdd_education_app/src/course/features/exams/data/models/user_exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/user_exam.dart';
-
-import '../../../../../../core/errors/exceptions.dart';
 
 abstract class ExamRemoteDataSrc {
   Future<List<ExamModel>> getExams(String courseId);
@@ -65,8 +64,25 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
 
   @override
   Future<List<ExamModel>> getExams(String courseId) async {
-    // TODO: implement getExams
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      final result = await _firestore
+          .collection('courses')
+          .doc(courseId)
+          .collection('exams')
+          .get();
+
+      return result.docs.map((doc) => ExamModel.fromMap(doc.data())).toList();
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override
