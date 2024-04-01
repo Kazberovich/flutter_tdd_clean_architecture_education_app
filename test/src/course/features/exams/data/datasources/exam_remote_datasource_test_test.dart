@@ -218,10 +218,10 @@ void main() {
       // arrange
       final exam = UserExamModel.empty();
       await firestore.collection('users').doc(auth.currentUser!.uid).set(
-        const LocalUserModel.empty()
-            .copyWith(uid: auth.currentUser!.uid, points: 1)
-            .toMap(),
-      );
+            const LocalUserModel.empty()
+                .copyWith(uid: auth.currentUser!.uid, points: 1)
+                .toMap(),
+          );
       // Act
       await remoteDataSource.submitExam(exam);
 
@@ -235,4 +235,31 @@ void main() {
     });
   });
 
+  group('getUserExams', () {
+    test('should return a valid list of exams', () async {
+      // arrange
+      final exam = UserExamModel.empty();
+      await firestore.collection('users').doc(auth.currentUser!.uid).set(
+            const LocalUserModel.empty()
+                .copyWith(uid: auth.currentUser!.uid, points: 1)
+                .toMap(),
+          );
+      await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .collection('courses')
+          .doc(exam.courseId)
+          .set(
+            CourseModel.empty().copyWith(id: exam.courseId).toMap(),
+          );
+      await remoteDataSource.submitExam(exam);
+      // act
+      final result = await remoteDataSource.getUserExams();
+
+      // assert
+      expect(result, isA<List<UserExamModel>>());
+      expect(result, hasLength(1));
+      expect(result.first.courseId, exam.courseId);
+    });
+  });
 }
