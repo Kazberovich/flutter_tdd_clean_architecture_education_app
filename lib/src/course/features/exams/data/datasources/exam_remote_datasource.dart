@@ -87,13 +87,35 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
 
   @override
   Future<List<UserExamModel>> getUserCourseExams(String courseId) async {
-    // TODO: implement getUserCourseExams
-    throw UnimplementedError();
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+
+      final result = await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('courses')
+          .doc(courseId)
+          .collection('exams')
+          .get();
+
+      return result.docs
+          .map((doc) => UserExamModel.fromMap(doc.data()))
+          .toList();
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override
   Future<List<UserExamModel>> getUserExams() async {
-    // TODO: implement getUserExams
+    // TODO(GetUserExams): implement getUserExams
     throw UnimplementedError();
   }
 
@@ -136,7 +158,7 @@ class ExamRemoteDataSrcImpl implements ExamRemoteDataSrc {
       final userData = await _firestore.collection('users').doc(user.uid).get();
 
       final alreadyEnrolled = (userData.data()?['enrolledCourseIds'] as List?)
-          ?.contains(exam.courseId) ??
+              ?.contains(exam.courseId) ??
           false;
 
       if (!alreadyEnrolled) {
