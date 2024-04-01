@@ -229,7 +229,7 @@ void main() {
       final result = await remoteDataSource.getUserCourseExams(exam.courseId);
 
       // assert
-      expect(result, isA<List<ExamModel>>());
+      expect(result, isA<List<UserExamModel>>());
       expect(result, hasLength(1));
       expect(result.first.courseId, exam.courseId);
     });
