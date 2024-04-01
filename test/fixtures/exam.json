@@ -1,0 +1,25 @@
+{
+  "id": "Test String",
+  "courseId": "Test String",
+  "title": "Test String",
+  "description": "Test String",
+  "timeLimit": 0,
+  "imageUrl": null,
+  "questions": [
+    {
+      "id": "Test String",
+      "examId": "Test String",
+      "courseId": "Test String",
+      "questionText": "Test String",
+      "choices": [
+        {
+          "questionId": "Test String",
+          "identifier": "Test String",
+          "choiceAnswer": "Test String"
+        }
+      ],
+      "correctAnswer": "Test String"
+    }
+  ]
+}
+

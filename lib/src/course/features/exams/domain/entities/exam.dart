@@ -9,7 +9,7 @@ class Exam extends Equatable {
     required this.title,
     required this.description,
     required this.timeLimit,
-    required this.questions,
+    this.questions,
     this.imageUrl,
   });
 
@@ -29,7 +29,7 @@ class Exam extends Equatable {
   final String? imageUrl;
   final String description;
   final int timeLimit;
-  final List<ExamQuestion> questions;
+  final List<ExamQuestion>? questions;
 
   @override
   List<Object?> get props => [id, courseId];

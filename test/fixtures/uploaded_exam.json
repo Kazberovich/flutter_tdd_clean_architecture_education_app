@@ -1,0 +1,21 @@
+{
+  "id": "Test String",
+  "courseId": "Test String",
+  "title": "Test String",
+  "image_url": "",
+  "Description": "Test String",
+  "time_seconds": 0,
+  "questions": [
+    {
+      "id": "Test String",
+      "question": "Test String",
+      "answers": [
+        {
+          "identifier": "Test String",
+          "Answer": "Test String"
+        }
+      ],
+      "correct_answer": "Test String"
+    }
+  ]
+}
