@@ -212,4 +212,27 @@ void main() {
       },
     );
   });
+
+  group('getUserCourseExams', () {
+    test('should return the exams of the given course', () async {
+      // arrange
+      final exam = UserExamModel.empty();
+      await firestore.collection('users').doc(auth.currentUser!.uid).set(
+        const LocalUserModel.empty()
+            .copyWith(uid: auth.currentUser!.uid, points: 1)
+            .toMap(),
+      );
+      // Act
+      await remoteDataSource.submitExam(exam);
+
+      // act
+      final result = await remoteDataSource.getUserCourseExams(exam.courseId);
+
+      // assert
+      expect(result, isA<List<ExamModel>>());
+      expect(result, hasLength(1));
+      expect(result.first.courseId, exam.courseId);
+    });
+  });
+
 }
