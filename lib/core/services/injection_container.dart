@@ -16,6 +16,17 @@ import 'package:tdd_education_app/src/course/data/repositories/course_repository
 import 'package:tdd_education_app/src/course/domain/repositories/course_repository.dart';
 import 'package:tdd_education_app/src/course/domain/usecases/add_course.dart';
 import 'package:tdd_education_app/src/course/domain/usecases/get_courses.dart';
+import 'package:tdd_education_app/src/course/features/exams/data/datasources/exam_remote_datasource.dart';
+import 'package:tdd_education_app/src/course/features/exams/data/repositories/exam_repository_implementation.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/repositories/exam_repository.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/get_exam_questions.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/get_exams.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/get_user_course_exams.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/get_user_exams.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/submit_exam.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/update_exam.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/usecases/upload_exam.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/cubit/exam_cubit.dart';
 import 'package:tdd_education_app/src/course/features/materials/data/datasources/material_remote_data_src.dart';
 import 'package:tdd_education_app/src/course/features/materials/data/repos/material_repo_impl.dart';
 import 'package:tdd_education_app/src/course/features/materials/domain/repos/material_repo.dart';
