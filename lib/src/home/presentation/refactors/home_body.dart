@@ -9,6 +9,8 @@ import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dar
 import 'package:tdd_education_app/src/home/presentation/refactors/home_header.dart';
 import 'package:tdd_education_app/src/home/presentation/refactors/home_subjects.dart';
 
+import 'package:tdd_education_app/src/home/presentation/refactors/home_videos.dart';
+
 class HomeBody extends StatefulWidget {
   const HomeBody({super.key});
 
@@ -63,6 +65,8 @@ class _HomeBodyState extends State<HomeBody> {
               HomeSubjects(
                 courses: courses,
               ),
+              const SizedBox(height: 20),
+              const HomeVideos(),
             ],
           );
         }
