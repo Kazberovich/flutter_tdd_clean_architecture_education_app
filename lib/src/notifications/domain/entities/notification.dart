@@ -1,0 +1,31 @@
+import 'package:equatable/equatable.dart';
+import 'package:tdd_education_app/core/enums/notification_enum.dart';
+
+class Notification extends Equatable {
+  const Notification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.category,
+    required this.seen,
+    required this.sentAt,
+  });
+
+  Notification.empty()
+      : id = '_empty.id',
+        title = '_empty.title',
+        body = '_empty.body',
+        category = NotificationCategory.NONE,
+        seen = false,
+        sentAt = DateTime.now();
+
+  final String id;
+  final String title;
+  final String body;
+  final NotificationCategory category;
+  final bool seen;
+  final DateTime sentAt;
+
+  @override
+  List<Object?> get props => [id];
+}

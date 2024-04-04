@@ -3,7 +3,7 @@ import 'package:tdd_education_app/core/usecases/usecases.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/authentication/domain/repositories/authentication_repository.dart';
 
-class SignUpUsecase extends UsecaseWithParams<void, SignUpParams> {
+class SignUpUsecase extends FutureUsecaseWithParams<void, SignUpParams> {
   const SignUpUsecase(this._repository);
 
   final AuthenticationRepository _repository;

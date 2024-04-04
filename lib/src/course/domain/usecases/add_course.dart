@@ -3,7 +3,7 @@ import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 import 'package:tdd_education_app/src/course/domain/repositories/course_repository.dart';
 
-class AddCourse extends UsecaseWithParams<void, Course> {
+class AddCourse extends FutureUsecaseWithParams<void, Course> {
   const AddCourse(this._repository);
 
   final CourseRepository _repository;
