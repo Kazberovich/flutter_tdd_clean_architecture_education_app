@@ -4,7 +4,7 @@ import 'package:tdd_education_app/src/course/features/exams/domain/entities/user
 
 import 'package:tdd_education_app/src/course/features/exams/domain/repositories/exam_repository.dart';
 
-class SubmitExam extends UsecaseWithParams<void, UserExam> {
+class SubmitExam extends FutureUsecaseWithParams<void, UserExam> {
   const SubmitExam(this._repository);
 
   final ExamRepository _repository;

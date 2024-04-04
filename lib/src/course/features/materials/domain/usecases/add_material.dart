@@ -3,7 +3,7 @@ import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/features/materials/domain/entities/resource.dart';
 import 'package:tdd_education_app/src/course/features/materials/domain/repos/material_repo.dart';
 
-class AddMaterial extends UsecaseWithParams<void, Resource> {
+class AddMaterial extends FutureUsecaseWithParams<void, Resource> {
   const AddMaterial(this._repo);
 
   final MaterialRepo _repo;
