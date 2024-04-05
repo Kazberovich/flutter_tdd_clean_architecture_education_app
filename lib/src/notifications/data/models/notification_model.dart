@@ -11,7 +11,7 @@ class NotificationModel extends Notification {
     required super.body,
     required super.category,
     required super.sentAt,
-    required super.seen,
+    super.seen,
   });
 
   NotificationModel.fromMap(DataMap map)
