@@ -64,14 +64,22 @@ class NotificationRepositoryImplementation implements NotificationRepository {
   }
 
   @override
-  ResultFuture<void> markAsRead(String notificationId) {
-    // TODO: implement markAsRead
-    throw UnimplementedError();
+  ResultFuture<void> markAsRead(String notificationId) async {
+    try {
+      await _remoteDatasource.markAsRead(notificationId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure.fromException(e));
+    }
   }
 
   @override
-  ResultFuture<void> sendNotification(Notification notification) {
-    // TODO: implement sendNotification
-    throw UnimplementedError();
+  ResultFuture<void> sendNotification(Notification notification) async {
+    try {
+      await _remoteDatasource.sendNotification(notification);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure.fromException(e));
+    }
   }
 }
