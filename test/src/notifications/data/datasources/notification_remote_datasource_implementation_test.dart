@@ -95,4 +95,35 @@ void main() {
       );
     });
   });
+
+  group('getNotifications', () {
+    test(
+      'should return a [Stream<List<Notification>>] '
+      'when the call is successful',
+      () async {
+        // arrange
+        final userId = auth.currentUser!.uid;
+
+        final expectedNotifications = [
+          NotificationModel.empty(),
+          NotificationModel.empty().copyWith(
+            id: '1',
+            sentAt: DateTime.now().add(
+              const Duration(seconds: 50),
+            ),
+          ),
+        ];
+
+        for (final notification in expectedNotifications) {
+          await notificationRemoteDatasource.sendNotification(notification);
+        }
+
+        // act
+        final result = notificationRemoteDatasource.getNotifications();
+
+        // assert
+        expect(result, emits(equals(<NotificationModel>[])));
+      },
+    );
+  });
 }
