@@ -114,9 +114,25 @@ class NotificationRemoteDatasourceImplementation
   }
 
   @override
-  Future<void> markAsRead(String notificationId) {
-    // TODO: implement markAsRead
-    throw UnimplementedError();
+  Future<void> markAsRead(String notificationId) async {
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('notifications')
+          .doc(notificationId)
+          .update({'seen': true});
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override

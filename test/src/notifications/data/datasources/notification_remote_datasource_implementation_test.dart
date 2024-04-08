@@ -241,4 +241,47 @@ void main() {
       },
     );
   });
+
+  group('markAsRead', () {
+    test(
+      'should mark the specified notification as read',
+      () async {
+        var tId = '';
+        // Create notifications sub-collection for current user
+        for (var i = 0; i < 5; i++) {
+          final docRef = await addNotification(
+            NotificationModel.empty().copyWith(
+              id: i.toString(),
+              seen: i.isEven,
+            ),
+          );
+          if (i == 1) {
+            tId = docRef.id;
+          }
+        }
+
+        final collection = await getNotifications();
+        // Assert that the notifications were added
+        expect(
+          collection.docs,
+          hasLength(5),
+        );
+
+        // Act
+        await notificationRemoteDatasource.markAsRead(tId);
+        final notificationDoc = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .doc(tId)
+            .get();
+
+        // Assert that the notification was marked as read
+        expect(
+          notificationDoc.data()!['seen'],
+          isTrue,
+        );
+      },
+    );
+  });
 }
