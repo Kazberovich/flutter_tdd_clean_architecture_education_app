@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tdd_education_app/core/errors/exceptions.dart';
+import 'package:tdd_education_app/core/utils/datasource_utils.dart';
 import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
 import 'package:tdd_education_app/src/notifications/domain/entities/notification.dart';
 
@@ -52,8 +54,53 @@ class NotificationRemoteDatasourceImplementation
   }
 
   @override
-  Future<void> sendNotification(Notification notification) {
-    // TODO: implement sendNotification
-    throw UnimplementedError();
+  Future<void> sendNotification(Notification notification) async {
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      // add notification to every users' notification collection
+      final users = await _firestore.collection('users').get();
+      if (users.docs.length > 500) {
+        for (var i = 0; i < users.docs.length; i += 500) {
+          final batch = _firestore.batch();
+          final end = i + 500;
+          final usersBatch = users.docs
+              .sublist(i, end > users.docs.length ? users.docs.length : end);
+
+          for (final user in usersBatch) {
+            final newNotificationRef =
+                user.reference.collection('notifications').doc();
+            batch.set(
+              newNotificationRef,
+              (notification as NotificationModel)
+                  .copyWith(id: newNotificationRef.id)
+                  .toMap(),
+            );
+          }
+          await batch.commit();
+        }
+      } else {
+        final batch = _firestore.batch();
+        for (final user in users.docs) {
+          final newNotificationRef =
+              user.reference.collection('notifications').doc();
+          batch.set(
+            newNotificationRef,
+            (notification as NotificationModel)
+                .copyWith(id: newNotificationRef.id)
+                .toMap(),
+          );
+        }
+        await batch.commit();
+      }
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 }
