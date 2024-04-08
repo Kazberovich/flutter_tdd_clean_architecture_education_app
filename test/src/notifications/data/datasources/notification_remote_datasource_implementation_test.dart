@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
@@ -96,6 +97,15 @@ void main() {
     });
   });
 
+  Future<DocumentReference> addNotification(
+      NotificationModel notification) async {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('notifications')
+        .add(notification.toMap());
+  }
+
   group('getNotifications', () {
     test(
       'should return a [Stream<List<Notification>>] '
@@ -103,6 +113,10 @@ void main() {
       () async {
         // arrange
         final userId = auth.currentUser!.uid;
+        await firestore
+            .collection('users')
+            .doc(userId)
+            .set(const LocalUserModel.empty().copyWith(uid: userId).toMap());
 
         final expectedNotifications = [
           NotificationModel.empty(),
@@ -115,15 +129,22 @@ void main() {
         ];
 
         for (final notification in expectedNotifications) {
-          await notificationRemoteDatasource.sendNotification(notification);
+          await addNotification(notification);
         }
 
         // act
         final result = notificationRemoteDatasource.getNotifications();
 
         // assert
-        expect(result, emits(equals(<NotificationModel>[])));
+        expect(result, emitsInOrder([equals(expectedNotifications.reversed)]));
       },
     );
+
+    test('should return a stream of empty list when there the error occurs',
+        () {
+      final result = notificationRemoteDatasource.getNotifications();
+
+      expect(result, emits(equals(<NotificationModel>[])));
+    });
   });
 }

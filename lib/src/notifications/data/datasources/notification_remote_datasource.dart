@@ -43,8 +43,42 @@ class NotificationRemoteDatasourceImplementation
 
   @override
   Stream<List<NotificationModel>> getNotifications() {
-    // TODO: implement getNotifications
-    throw UnimplementedError();
+    try {
+      DataSourceUtils.authorizedUser(_auth);
+      final notificationStream = _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('notifications')
+          .orderBy('sentAt', descending: true)
+          .snapshots()
+          .map(
+            (snapshot) => snapshot.docs
+                .map((doc) => NotificationModel.fromMap(doc.data()))
+                .toList(),
+          );
+      return notificationStream.handleError((dynamic e) {
+        if (e is FirebaseException) {
+          throw ServerException(
+            message: e.message ?? 'Unknown error occurred',
+            statusCode: e.code,
+          );
+        }
+        throw ServerException(message: e.toString(), statusCode: '505');
+      });
+    } on FirebaseException catch (e) {
+      return Stream.error(
+        ServerException(
+          message: e.message ?? 'Unknown error occurred',
+          statusCode: e.code,
+        ),
+      );
+    } on ServerException catch (e) {
+      return Stream.error(e);
+    } catch (e) {
+      return Stream.error(
+        ServerException(message: e.toString(), statusCode: '505'),
+      );
+    }
   }
 
   @override
