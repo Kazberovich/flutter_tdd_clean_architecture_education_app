@@ -7,8 +7,7 @@ class Notification extends Equatable {
     required this.title,
     required this.body,
     required this.category,
-    required this.seen,
-    required this.sentAt,
+    required this.sentAt, this.seen = false,
   });
 
   Notification.empty()
