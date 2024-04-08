@@ -52,9 +52,25 @@ class NotificationRemoteDatasourceImplementation
   }
 
   @override
-  Future<void> clearAll() {
-    // TODO: implement clearAll
-    throw UnimplementedError();
+  Future<void> clearAll() async {
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+
+      final query = _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('notifications');
+      return _deleteNotificationsByQuery(query);
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override
@@ -151,6 +167,30 @@ class NotificationRemoteDatasourceImplementation
       rethrow;
     } catch (e) {
       throw ServerException(message: e.toString(), statusCode: '505');
+    }
+  }
+
+  Future<void> _deleteNotificationsByQuery(Query query) async {
+    final notifications = await query.get();
+    if (notifications.docs.length > 500) {
+      for (var i = 0; i < notifications.docs.length; i += 500) {
+        final batch = _firestore.batch();
+        final end = i + 500;
+        final notificationsBatch = notifications.docs.sublist(
+          i,
+          end > notifications.docs.length ? notifications.docs.length : end,
+        );
+        for (final notification in notificationsBatch) {
+          batch.delete(notification.reference);
+        }
+        await batch.commit();
+      }
+    } else {
+      final batch = _firestore.batch();
+      for (final notification in notifications.docs) {
+        batch.delete(notification.reference);
+      }
+      await batch.commit();
     }
   }
 }

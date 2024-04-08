@@ -158,7 +158,7 @@ void main() {
   group('clear', () {
     test(
       'should delete the specified [Notification] from the database',
-          () async {
+      () async {
         // Create notifications sub-collection for current user
         final firstDocRef = await firestore
             .collection('users')
@@ -206,6 +206,37 @@ void main() {
         expect(
           firstNotificationDoc.exists,
           isTrue,
+        );
+      },
+    );
+  });
+
+  group('clearAll', () {
+    test(
+      "should delete every notification in the current user's sub-collection",
+      () async {
+        // Create notifications sub-collection for current user
+        for (var i = 0; i < 5; i++) {
+          await addNotification(
+            NotificationModel.empty().copyWith(id: i.toString()),
+          );
+        }
+
+        final collection = await getNotifications();
+        // Assert that the notifications were added
+        expect(
+          collection.docs,
+          hasLength(5),
+        );
+
+        // Act
+        await notificationRemoteDatasource.clearAll();
+        final notificationDocs = await getNotifications();
+
+        // Assert that the notifications were deleted
+        expect(
+          notificationDocs.docs,
+          isEmpty,
         );
       },
     );
