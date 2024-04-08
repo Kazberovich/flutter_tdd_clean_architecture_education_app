@@ -5,6 +5,7 @@ import 'package:firebase_auth_mocks/firebase_auth_mocks.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_sign_in_mocks/google_sign_in_mocks.dart';
+import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 import 'package:tdd_education_app/src/notifications/data/datasources/notification_remote_datasource.dart';
 import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
@@ -106,6 +107,12 @@ void main() {
         .add(notification.toMap());
   }
 
+  Future<QuerySnapshot<DataMap>> getNotifications() async => firestore
+      .collection('users')
+      .doc(auth.currentUser!.uid)
+      .collection('notifications')
+      .get();
+
   group('getNotifications', () {
     test(
       'should return a [Stream<List<Notification>>] '
@@ -146,5 +153,61 @@ void main() {
 
       expect(result, emits(equals(<NotificationModel>[])));
     });
+  });
+
+  group('clear', () {
+    test(
+      'should delete the specified [Notification] from the database',
+          () async {
+        // Create notifications sub-collection for current user
+        final firstDocRef = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .add(NotificationModel.empty().toMap());
+        // Add a notification to the sub-collection
+        final notification = NotificationModel.empty().copyWith(id: '1');
+        final docRef = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .add(notification.toMap());
+
+        final collection = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .get();
+        // Assert that the notification was added
+        expect(
+          collection.docs,
+          hasLength(2),
+        );
+        // Act
+        await notificationRemoteDatasource.clear(docRef.id);
+        final secondNotificationDoc = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .doc(docRef.id)
+            .get();
+        final firstNotificationDoc = await firestore
+            .collection('users')
+            .doc(auth.currentUser!.uid)
+            .collection('notifications')
+            .doc(firstDocRef.id)
+            .get();
+
+        // Assert that the notification was deleted
+        expect(
+          secondNotificationDoc.exists,
+          isFalse,
+        );
+        expect(
+          firstNotificationDoc.exists,
+          isTrue,
+        );
+      },
+    );
   });
 }

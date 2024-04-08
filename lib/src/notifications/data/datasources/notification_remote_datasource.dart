@@ -30,9 +30,25 @@ class NotificationRemoteDatasourceImplementation
   final FirebaseAuth _auth;
 
   @override
-  Future<void> clear(String notificationId) {
-    // TODO: implement clear
-    throw UnimplementedError();
+  Future<void> clear(String notificationId) async {
+    try {
+      await DataSourceUtils.authorizedUser(_auth);
+      await _firestore
+          .collection('users')
+          .doc(_auth.currentUser!.uid)
+          .collection('notifications')
+          .doc(notificationId)
+          .delete();
+    } on FirebaseException catch (e) {
+      throw ServerException(
+        message: e.message ?? 'Unknown error occurred',
+        statusCode: e.code,
+      );
+    } on ServerException {
+      rethrow;
+    } catch (e) {
+      throw ServerException(message: e.toString(), statusCode: '505');
+    }
   }
 
   @override
