@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^11.6.5
   firebase_ui_auth: ^1.7.0
   uuid: ^4.3.3
+  badges: ^3.1.2
 
 dependency_overrides:
   firebase_auth: "4.12.0"
