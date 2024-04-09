@@ -40,6 +40,15 @@ import 'package:tdd_education_app/src/course/features/videos/domain/usecases/add
 import 'package:tdd_education_app/src/course/features/videos/domain/usecases/get_videos.dart';
 import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
+import 'package:tdd_education_app/src/notifications/data/datasources/notification_remote_datasource.dart';
+import 'package:tdd_education_app/src/notifications/data/repositories/notification_repository_implementation.dart';
+import 'package:tdd_education_app/src/notifications/domain/repositories/notification_repository.dart';
+import 'package:tdd_education_app/src/notifications/domain/usecases/clear.dart';
+import 'package:tdd_education_app/src/notifications/domain/usecases/clear_all.dart';
+import 'package:tdd_education_app/src/notifications/domain/usecases/get_notifications.dart';
+import 'package:tdd_education_app/src/notifications/domain/usecases/mark_as_read.dart';
+import 'package:tdd_education_app/src/notifications/domain/usecases/send_notification.dart';
+import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
 import 'package:tdd_education_app/src/onboarding/data/repositories/onboarding_repository_implementation.dart';
 import 'package:tdd_education_app/src/onboarding/domain/repositories/onboarding_repository.dart';
