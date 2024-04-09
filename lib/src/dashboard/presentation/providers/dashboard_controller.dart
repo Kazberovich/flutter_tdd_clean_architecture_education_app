@@ -7,6 +7,7 @@ import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/home/presentation/views/home_view.dart';
+import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/profile/presentation/views/profile_view.dart';
 
 class DashboardController extends ChangeNotifier {
@@ -20,6 +21,7 @@ class DashboardController extends ChangeNotifier {
             providers: [
               BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
               BlocProvider(create: (_) => serviceLocator<VideoCubit>()),
+              BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
             ],
             child: const HomeView(),
           ),
