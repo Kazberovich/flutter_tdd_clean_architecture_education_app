@@ -28,14 +28,18 @@ class _NotificationBellState extends State<NotificationBell> {
               .where((notification) => !notification.seen)
               .length;
           final showBadge = unseenNotificationsLength > 0;
-          return Badge(
-            showBadge: showBadge,
-            position: BadgePosition.topEnd(top: -16, end: -11),
-            badgeContent: Text(
-              unseenNotificationsLength.toString(),
-              style: const TextStyle(color: Colors.white, fontSize: 12),
+          return GestureDetector(
+            // TODO(Notifications): Push to Notifications
+            onTap: (){},
+            child: Badge(
+              showBadge: showBadge,
+              position: BadgePosition.topEnd(top: -16, end: -11),
+              badgeContent: Text(
+                unseenNotificationsLength.toString(),
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+              child: const Icon(IconlyLight.notification),
             ),
-            child: const Icon(IconlyLight.notification),
           );
         }
         return const Icon(IconlyLight.notification);
