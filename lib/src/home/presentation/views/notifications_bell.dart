@@ -2,6 +2,9 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
+import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/services/injection_container.dart';
+import 'package:tdd_education_app/src/notifications/presentation/views/notifications_view.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 
 class NotificationBell extends StatefulWidget {
@@ -29,8 +32,14 @@ class _NotificationBellState extends State<NotificationBell> {
               .length;
           final showBadge = unseenNotificationsLength > 0;
           return GestureDetector(
-            // TODO(Notifications): Push to Notifications
-            onTap: (){},
+            onTap: () {
+              context.push(
+                BlocProvider(
+                  create: (_) => serviceLocator<NotificationCubit>(),
+                  child: const NotificationsView(),
+                ),
+              );
+            },
             child: Badge(
               showBadge: showBadge,
               position: BadgePosition.topEnd(top: -16, end: -11),
