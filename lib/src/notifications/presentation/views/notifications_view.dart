@@ -1,9 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:badges/badges.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tdd_education_app/core/common/views/loading_view.dart';
 import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
+import 'package:tdd_education_app/core/enums/notification_enum.dart';
+import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
-
+import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
+import 'package:tdd_education_app/src/notifications/presentation/widgets/no_notifications.dart';
+import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_options.dart';
+import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_tile.dart';
 
 class NotificationsView extends StatefulWidget {
   const NotificationsView({super.key});
@@ -13,8 +20,6 @@ class NotificationsView extends StatefulWidget {
 }
 
 class _NotificationsViewState extends State<NotificationsView> {
-  bool loading = false;
-
   @override
   void initState() {
     super.initState();
@@ -29,26 +34,40 @@ class _NotificationsViewState extends State<NotificationsView> {
       appBar: AppBar(
         title: const Text('Notifications'),
         centerTitle: false,
+        titleSpacing: 0,
         leading: const NestedBackButton(),
-        actions: [],
+        actions: const [NotificationOptions()],
       ),
       body: BlocConsumer<NotificationCubit, NotificationState>(
-        builder: (context, state) {
-          // if (loading) {}
-          return Placeholder();
-        },
         listener: (context, state) {
-          if (loading) {
-            loading = false;
-            Navigator.of(context).pop();
-          }
-
           if (state is NotificationError) {
             CoreUtils.showSnackBar(context, state.message);
-          } else if (state is ClearingNotifications) {
-            loading = true;
-            CoreUtils.showLoadingDialog(context);
+            context.pop();
           }
+        },
+        builder: (context, state) {
+          if (state is GettingNotifications || state is ClearingNotifications) {
+            return const LoadingView();
+          } else if (state is NotificationsLoaded &&
+              state.notifications.isEmpty) {
+            return const NoNotifications();
+          } else if (state is NotificationsLoaded) {
+            return ListView.builder(
+                itemBuilder: (context, index) {
+                  final notification = state.notifications[index];
+
+                  return Badge(
+                    showBadge: !notification.seen,
+                    position: BadgePosition.topEnd(top: 30, end: 20),
+                    child: NotificationTile(
+                      notification: notification,
+                    ),
+                  );
+                },
+                itemCount: 1 // state.notifications.length,
+                );
+          }
+          return const SizedBox.shrink();
         },
       ),
     );
