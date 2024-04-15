@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AddVideosView extends StatefulWidget {
-  const AddVideosView({super.key});
+class AddVideoView extends StatefulWidget {
+  const AddVideoView({super.key});
 
   static const routeName = '/add-videos';
 
   @override
-  State<AddVideosView> createState() => _AddVideosViewState();
+  State<AddVideoView> createState() => _AddVideoViewState();
 }
 
-class _AddVideosViewState extends State<AddVideosView> {
+class _AddVideoViewState extends State<AddVideoView> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();
