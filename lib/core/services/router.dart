@@ -12,6 +12,13 @@ import 'package:tdd_education_app/src/authentication/presentation/bloc/authentic
 import 'package:tdd_education_app/src/authentication/presentation/views/sign_in_screen.dart';
 import 'package:tdd_education_app/src/authentication/presentation/views/sign_up_screen.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/views/add_exam_view.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/cubit/material_cubit.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/views/add_materials_view.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/views/add_videos_view.dart';
+import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/views/course_details_screen.dart';
 import 'package:tdd_education_app/src/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
