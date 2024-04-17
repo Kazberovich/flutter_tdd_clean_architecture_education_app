@@ -37,30 +37,35 @@ class InformationField extends StatelessWidget {
         color: Colours.primaryColour,
       ),
     );
-    return TextField(
-      controller: controller,
-      autofocus: autoFocus,
-      focusNode: focusNode,
-      keyboardType: keyboardType,
-      onEditingComplete: onEditingComplete,
-      onTapOutside:
-          onTapOutside ?? (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      onChanged: onChanged,
-      decoration: InputDecoration(
-        hintText: hintText,
-        labelText: labelText,
-        border: border ? defaultBorder : null,
-        enabledBorder: border ? defaultBorder : null,
-        contentPadding:
-            border ? const EdgeInsets.symmetric(horizontal: 10) : null,
-        suffixIcon: suffixIcon ??
-            (controller.text.trim().isEmpty
-                ? null
-                : IconButton(
-                    onPressed: controller.clear,
-                    icon: const Icon(Icons.clear),
-                  )),
-      ),
+    return ListenableBuilder(
+      listenable: controller,
+      builder: (_, __) {
+        return TextField(
+          controller: controller,
+          autofocus: autoFocus,
+          focusNode: focusNode,
+          keyboardType: keyboardType,
+          onEditingComplete: onEditingComplete,
+          onTapOutside: onTapOutside ??
+              (_) => FocusManager.instance.primaryFocus?.unfocus(),
+          onChanged: onChanged,
+          decoration: InputDecoration(
+            hintText: hintText,
+            labelText: labelText,
+            border: border ? defaultBorder : null,
+            enabledBorder: border ? defaultBorder : null,
+            contentPadding:
+                border ? const EdgeInsets.symmetric(horizontal: 10) : null,
+            suffixIcon: suffixIcon ??
+                (controller.text.trim().isEmpty
+                    ? null
+                    : IconButton(
+                        onPressed: controller.clear,
+                        icon: const Icon(Icons.clear),
+                      )),
+          ),
+        );
+      },
     );
   }
 }
