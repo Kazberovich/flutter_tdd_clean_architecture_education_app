@@ -42,6 +42,7 @@ dependencies:
   uuid: ^4.3.3
   badges: ^3.1.2
   audioplayers: ^6.0.0
+  flutter_link_previewer: ^3.2.2
 
 dependency_overrides:
   firebase_auth: "4.12.0"
