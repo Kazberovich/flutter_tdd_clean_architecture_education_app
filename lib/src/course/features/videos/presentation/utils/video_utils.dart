@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/extensions/string_extentsions.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';
 
 import 'package:tdd_education_app/src/course/features/videos/domain/entities/video.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_metadata/youtube_metadata.dart';
 
 class VideoUtils {
@@ -43,6 +46,19 @@ class VideoUtils {
     } catch (e) {
       showSnack('Please try again. \n$e');
       return null;
+    }
+  }
+
+  static Future<void> playVideo(BuildContext context, String videoUrl) async {
+    if (videoUrl.isYoutubeVideo) {
+      if (!await launchUrl(
+        Uri.parse(videoUrl),
+        mode: LaunchMode.externalApplication,
+      )) {
+        CoreUtils.showSnackBar(context, 'Could not launch the $videoUrl');
+      } else {
+        //context.push(VideoPlayerView());
+      }
     }
   }
 }
