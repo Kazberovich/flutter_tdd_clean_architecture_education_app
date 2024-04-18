@@ -166,7 +166,38 @@ class _AddVideoViewState extends State<AddVideoView> {
               width: 0,
             ),
           if (video != null)
-            VideoTile(video!),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: VideoTile(
+                video!,
+                isFile: thumbnailIsFile,
+                uploadTimePrefix: '~  ',
+              ),
+            ),
+          if (getMoreDetails) ...[
+            InformationField(
+              controller: authorController,
+              keyboardType: TextInputType.name,
+              autoFocus: true,
+              focusNode: authorFocusNode,
+              labelText: 'Tutor Name',
+              onEditingComplete: () {
+                setState(() {});
+                titleFocusNode.requestFocus();
+              },
+            ),
+            InformationField(
+              controller: titleController,
+              labelText: 'Video Title',
+              focusNode: titleFocusNode,
+              onEditingComplete: () {
+                FocusManager.instance.primaryFocus?.unfocus();
+                setState(() {});
+              },
+            ),
+          ],
+          const SizedBox(height: 20),
+
         ],
       ),
     );
