@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
@@ -52,12 +53,12 @@ class CoreUtils {
     }
   }
 
-  static void sendNotification({
+  static void sendNotification(BuildContext context, {
     required String title,
     required String body,
     required NotificationCategory category,
   }) {
-    serviceLocator<NotificationCubit>().sendNotification(
+    context.read<NotificationCubit>().sendNotification(
       NotificationModel.empty().copyWith(
         title: title,
         body: body,

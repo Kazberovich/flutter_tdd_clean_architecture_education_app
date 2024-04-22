@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_link_previewer/flutter_link_previewer.dart';
 import 'package:tdd_education_app/core/common/widgets/course_picker.dart';
 import 'package:tdd_education_app/core/common/widgets/information_field.dart';
+import 'package:tdd_education_app/core/common/widgets/reactive_button.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
 import 'package:tdd_education_app/core/extensions/string_extentsions.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
@@ -113,7 +114,7 @@ class _AddVideoViewState extends State<AddVideoView> {
   Widget build(BuildContext context) {
     return NotificationWrapper(
       onNotificationSent: () {
-        CoreUtils.showLoadingDialog(context);
+        Navigator.pop(context);
       },
       child: BlocListener<VideoCubit, VideoState>(
         listener: (context, state) {
@@ -129,6 +130,7 @@ class _AddVideoViewState extends State<AddVideoView> {
           } else if (state is VideoAdded) {
             CoreUtils.showSnackBar(context, 'Video added successfully');
             CoreUtils.sendNotification(
+              context,
               title: 'New (${courseNotifier.value!.title.trim()})',
               body: 'A new video has been added',
               category: NotificationCategory.VIDEO,
@@ -230,7 +232,10 @@ class _AddVideoViewState extends State<AddVideoView> {
               ],
               const SizedBox(height: 20),
               Center(
-                child: ElevatedButton(
+                child: ReactiveButton(
+                  disabled: video == null,
+                  loading: loading == true,
+                  text: 'Submit',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       if (courseNotifier.value == null) {
@@ -257,9 +262,8 @@ class _AddVideoViewState extends State<AddVideoView> {
                       }
                     }
                   },
-                  child: Text('Text'),
                 ),
-              )
+              ),
             ],
           ),
         ),
