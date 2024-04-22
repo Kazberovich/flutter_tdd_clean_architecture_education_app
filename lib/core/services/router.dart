@@ -21,6 +21,7 @@ import 'package:tdd_education_app/src/course/features/videos/presentation/views/
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/views/course_details_screen.dart';
 import 'package:tdd_education_app/src/dashboard/presentation/views/dashboard_screen.dart';
+import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
 import 'package:tdd_education_app/src/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/presentation/views/onboarding_screen.dart';

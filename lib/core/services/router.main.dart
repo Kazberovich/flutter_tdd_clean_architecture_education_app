@@ -75,6 +75,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           providers: [
             BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
             BlocProvider(create: (_) => serviceLocator<VideoCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
           ],
           child: const AddVideoView(),
         ),
@@ -87,6 +88,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           providers: [
             BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
             BlocProvider(create: (_) => serviceLocator<MaterialCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
           ],
           child: const AddMaterialsView(),
         ),
@@ -99,6 +101,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           providers: [
             BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
             BlocProvider(create: (_) => serviceLocator<ExamCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
           ],
           child: const AddExamView(),
         ),
