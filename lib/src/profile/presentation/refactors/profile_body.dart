@@ -10,9 +10,11 @@ import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/views/add_exam_view.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/views/add_materials_view.dart';
 import 'package:tdd_education_app/src/course/features/videos/domain/usecases/add_video.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/features/videos/presentation/views/add_videos_view.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/widgets/add_course_sheet.dart';
+import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/profile/presentation/widgets/admin_button.dart';
 
 import 'package:tdd_education_app/src/profile/presentation/widgets/user_info_card.dart';
@@ -99,8 +101,15 @@ class ProfileBody extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet<void>(
                     context: context,
-                    builder: (context) => BlocProvider(
-                      create: (_) => serviceLocator<CourseCubit>(),
+                    builder: (context) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) => serviceLocator<CourseCubit>(),
+                        ),
+                        BlocProvider(
+                          create: (_) => serviceLocator<NotificationCubit>(),
+                        ),
+                      ],
                       child: const AddCourseSheet(),
                     ),
                     backgroundColor: Colors.white,
