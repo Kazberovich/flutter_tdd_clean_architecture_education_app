@@ -68,6 +68,14 @@ class _AddVideoViewState extends State<AddVideoView> {
     urlController.addListener(() {
       if (urlController.text.trim().isEmpty) reset();
     });
+
+    authorController.addListener(() {
+      video = video?.copyWith(tutor: authorController.text.trim());
+    });
+
+    titleController.addListener(() {
+      video = video?.copyWith(title: titleController.text.trim());
+    });
   }
 
   Future<void> fetchVideo() async {
@@ -251,14 +259,20 @@ class _AddVideoViewState extends State<AddVideoView> {
                         );
                       }
                       if (video != null &&
-                          video!.thumbnail != null &&
-                          video!.tutor != null) {
+                          video!.tutor != null &&
+                          video!.title != null &&
+                          video!.title!.isNotEmpty) {
                         video = video?.copyWith(
                           thumbnailIsFile: thumbnailIsFile,
                           courseId: courseNotifier.value!.id,
                           uploadDate: DateTime.now(),
                         );
                         context.read<VideoCubit>().addVideo(video!);
+                      } else {
+                        CoreUtils.showSnackBar(
+                          context,
+                          'Please fill all fields',
+                        );
                       }
                     }
                   },
