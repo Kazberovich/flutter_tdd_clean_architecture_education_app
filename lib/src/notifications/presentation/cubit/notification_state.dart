@@ -27,6 +27,10 @@ class NotificationSent extends NotificationState {
   const NotificationSent();
 }
 
+class NotificationCleared extends NotificationState {
+  const NotificationCleared();
+}
+
 class NotificationsLoaded extends NotificationState {
   const NotificationsLoaded(this.notifications);
 

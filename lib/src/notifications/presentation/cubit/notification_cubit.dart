@@ -20,11 +20,13 @@ class NotificationCubit extends Cubit<NotificationState> {
     required GetNotifications getNotifications,
     required MarkAsRead markAsRead,
     required SendNotification sendNotification,
+    required NotificationCleared notificationCleared,
   })  : _clear = clear,
         _clearAll = clearAll,
         _getNotifications = getNotifications,
         _markAsRead = markAsRead,
         _sendNotification = sendNotification,
+        _notificationCleared = notificationCleared,
         super(const NotificationInitial());
 
   final Clear _clear;
@@ -32,13 +34,14 @@ class NotificationCubit extends Cubit<NotificationState> {
   final GetNotifications _getNotifications;
   final MarkAsRead _markAsRead;
   final SendNotification _sendNotification;
+  final NotificationCleared _notificationCleared;
 
   Future<void> clear(String notificationId) async {
     emit(const ClearingNotifications());
     final result = await _clear(notificationId);
     result.fold(
       (failure) => emit(NotificationError(failure.errorMessage)),
-      (_) => emit(const NotificationInitial()),
+      (_) => emit(const NotificationCleared()),
     );
   }
 
@@ -47,7 +50,7 @@ class NotificationCubit extends Cubit<NotificationState> {
     final result = await _clearAll();
     result.fold(
       (failure) => emit(NotificationError(failure.errorMessage)),
-      (_) => emit(const NotificationInitial()),
+      (_) => emit(const NotificationCleared()),
     );
   }
 

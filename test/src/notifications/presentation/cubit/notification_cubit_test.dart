@@ -1,3 +1,6 @@
+
+
+
 import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +20,8 @@ class MockClearAll extends Mock implements ClearAll {}
 
 class MockGetNotifications extends Mock implements GetNotifications {}
 
+class MockNotificationCleared extends Mock implements NotificationCleared {}
+
 class MockMarkAsRead extends Mock implements MarkAsRead {}
 
 class MockSendNotification extends Mock implements SendNotification {}
@@ -28,6 +33,7 @@ void main() {
   late GetNotifications getNotifications;
   late MarkAsRead markAsRead;
   late SendNotification sendNotification;
+  late NotificationCleared notificationCleared;
 
   setUp(() {
     clear = MockClear();
@@ -35,12 +41,14 @@ void main() {
     getNotifications = MockGetNotifications();
     markAsRead = MockMarkAsRead();
     sendNotification = MockSendNotification();
+    notificationCleared = MockNotificationCleared();
     cubit = NotificationCubit(
       clear: clear,
       clearAll: clearAll,
       getNotifications: getNotifications,
       markAsRead: markAsRead,
       sendNotification: sendNotification,
+      notificationCleared: notificationCleared,
     );
   });
 
@@ -57,7 +65,7 @@ void main() {
   group('clear', () {
     blocTest<NotificationCubit, NotificationState>(
       'should emit '
-      '[ClearingNotifications, NotificationInitial] when successful',
+      '[ClearingNotifications, NotificationCleared] when successful',
       build: () {
         when(() => clear(any())).thenAnswer((_) async => const Right(null));
         return cubit;
@@ -65,7 +73,7 @@ void main() {
       act: (cubit) => cubit.clear('id'),
       expect: () => [
         const ClearingNotifications(),
-        const NotificationInitial(),
+        const NotificationCleared(),
       ],
       verify: (_) {
         verify(() => clear('id')).called(1);
@@ -97,7 +105,7 @@ void main() {
   group('clearAll', () {
     blocTest<NotificationCubit, NotificationState>(
       'should emit '
-      '[ClearingNotifications, NotificationInitial] when successful',
+      '[ClearingNotifications, NotificationCleared] when successful',
       build: () {
         when(() => clearAll()).thenAnswer((_) async => const Right(null));
         return cubit;
@@ -105,7 +113,7 @@ void main() {
       act: (cubit) => cubit.clearAll(),
       expect: () => [
         const ClearingNotifications(),
-        const NotificationInitial(),
+        const NotificationCleared(),
       ],
       verify: (_) {
         verify(() => clearAll()).called(1);
