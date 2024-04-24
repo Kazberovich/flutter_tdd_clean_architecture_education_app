@@ -108,6 +108,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
+    case CourseVideosView.routeName:
+      return _pageBuilder(
+        (p0) => BlocProvider(
+          create: (_) => serviceLocator<VideoCubit>(),
+          child: CourseVideosView(course: routeSettings.arguments! as Course),
+        ),
+        settings: routeSettings,
+      );
+
     default:
       return _pageBuilder(
         (_) => const PageUnderConstruction(),

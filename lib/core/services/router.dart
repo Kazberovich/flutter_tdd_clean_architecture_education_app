@@ -18,6 +18,7 @@ import 'package:tdd_education_app/src/course/features/materials/presentation/cub
 import 'package:tdd_education_app/src/course/features/materials/presentation/views/add_materials_view.dart';
 import 'package:tdd_education_app/src/course/features/videos/presentation/cubit/video_cubit.dart';
 import 'package:tdd_education_app/src/course/features/videos/presentation/views/add_videos_view.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/views/course_videos_view.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/views/course_details_screen.dart';
 import 'package:tdd_education_app/src/dashboard/presentation/views/dashboard_screen.dart';
