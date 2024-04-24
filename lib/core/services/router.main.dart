@@ -107,7 +107,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         ),
         settings: routeSettings,
       );
-
+    case VideoPlayerView.routeName:
+      return _pageBuilder(
+        (p0) => VideoPlayerView(videoURL: routeSettings.arguments! as String),
+        settings: routeSettings,
+      );
     case CourseVideosView.routeName:
       return _pageBuilder(
         (p0) => BlocProvider(
