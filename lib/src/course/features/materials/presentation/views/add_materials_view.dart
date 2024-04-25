@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/common/widgets/course_picker.dart';
 import 'package:tdd_education_app/core/common/widgets/information_field.dart';
+import 'package:tdd_education_app/core/extensions/context_extension.dart';
+import 'package:tdd_education_app/core/res/colours.dart';
 
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 
@@ -70,11 +72,16 @@ class _AddMaterialsViewState extends State<AddMaterialsView> {
                           : Icons.check_circle_outline,
                     ),
                     color: authorSet ? Colors.green : Colors.grey,
-                    onPressed: () {
-                      
-                    },
+                    onPressed: () {},
                   ),
                 ),
+                const SizedBox(height: 10),
+                Text(
+                  'You can upload multiple materials at once.',
+                  style: context.theme.textTheme.bodySmall
+                      ?.copyWith(color: Colours.neutralTextColour),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           ),
