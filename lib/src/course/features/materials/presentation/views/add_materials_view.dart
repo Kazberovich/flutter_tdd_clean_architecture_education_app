@@ -1,3 +1,6 @@
+import 'dart:js_interop';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:tdd_education_app/core/common/widgets/course_picker.dart';
 import 'package:tdd_education_app/core/common/widgets/information_field.dart';
@@ -5,6 +8,8 @@ import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
+import 'package:tdd_education_app/src/course/features/materials/domain/entities/picked_resource.dart';
+import 'package:tdd_education_app/src/course/features/materials/domain/entities/resource.dart';
 
 class AddMaterialsView extends StatefulWidget {
   const AddMaterialsView({super.key});
@@ -16,12 +21,31 @@ class AddMaterialsView extends StatefulWidget {
 }
 
 class _AddMaterialsViewState extends State<AddMaterialsView> {
+  final resources = <PickedResource>[];
+
   final formKey = GlobalKey<FormState>();
   final courseController = TextEditingController();
   final authorController = TextEditingController();
   final courseNotifier = ValueNotifier<Course?>(null);
 
   bool authorSet = false;
+
+  Future<void> pickResource() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: true);
+    if (result != null) {
+      setState(() {
+        resources.addAll(
+          result.paths.map(
+            (path) => PickedResource(
+              path: path!,
+              author: authorController.text.trim(),
+              title: path.split('/').last,
+            ),
+          ),
+        );
+      });
+    }
+  }
 
   @override
   void dispose() {
