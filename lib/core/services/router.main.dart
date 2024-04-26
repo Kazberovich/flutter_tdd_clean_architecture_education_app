@@ -69,6 +69,58 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
+    case AddVideoView.routeName:
+      return _pageBuilder(
+        (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
+            BlocProvider(create: (_) => serviceLocator<VideoCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
+          ],
+          child: const AddVideoView(),
+        ),
+        settings: routeSettings,
+      );
+
+    case AddMaterialsView.routeName:
+      return _pageBuilder(
+        (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
+            BlocProvider(create: (_) => serviceLocator<MaterialCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
+          ],
+          child: const AddMaterialsView(),
+        ),
+        settings: routeSettings,
+      );
+
+    case AddExamView.routeName:
+      return _pageBuilder(
+        (_) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => serviceLocator<CourseCubit>()),
+            BlocProvider(create: (_) => serviceLocator<ExamCubit>()),
+            BlocProvider(create: (_) => serviceLocator<NotificationCubit>()),
+          ],
+          child: const AddExamView(),
+        ),
+        settings: routeSettings,
+      );
+    case VideoPlayerView.routeName:
+      return _pageBuilder(
+        (p0) => VideoPlayerView(videoURL: routeSettings.arguments! as String),
+        settings: routeSettings,
+      );
+    case CourseVideosView.routeName:
+      return _pageBuilder(
+        (p0) => BlocProvider(
+          create: (_) => serviceLocator<VideoCubit>(),
+          child: CourseVideosView(course: routeSettings.arguments! as Course),
+        ),
+        settings: routeSettings,
+      );
+
     default:
       return _pageBuilder(
         (_) => const PageUnderConstruction(),

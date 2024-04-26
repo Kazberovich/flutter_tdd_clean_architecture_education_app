@@ -12,6 +12,8 @@ import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dar
 import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 
+import '../../../notifications/presentation/widgets/notification_wrapper.dart';
+
 class AddCourseSheet extends StatefulWidget {
   const AddCourseSheet({super.key});
 
@@ -54,14 +56,12 @@ class _AddCourseSheetState extends State<AddCourseSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<NotificationCubit, NotificationState>(
-      listener: (context, state) {
-        if (state is NotificationSent) {
-          if (loading) {
-            Navigator.of(context).pop();
-          }
+    return NotificationWrapper(
+      onNotificationSent: () {
+        if (loading) {
           Navigator.of(context).pop();
         }
+        Navigator.of(context).pop();
       },
       child: BlocListener<CourseCubit, CourseState>(
         listener: (_, state) {
@@ -78,12 +78,11 @@ class _AddCourseSheetState extends State<AddCourseSheet> {
             CoreUtils.showSnackBar(context, 'Course added successfully');
             CoreUtils.showLoadingDialog(context);
             loading = true;
-            serviceLocator<NotificationCubit>().sendNotification(
-              NotificationModel.empty().copyWith(
-                title: 'New Course(${titleController.text.trim()})',
-                body: 'A new course has been added',
-                category: NotificationCategory.COURSE,
-              ),
+            CoreUtils.sendNotification(
+              context,
+              title: 'New Course(${titleController.text.trim()})',
+              body: 'A new course has been added',
+              category: NotificationCategory.COURSE,
             );
           }
         },

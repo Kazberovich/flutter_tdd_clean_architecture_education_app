@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Notification;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/widgets/time_text.dart';
+import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/notifications/domain/entities/notification.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 
@@ -18,7 +19,13 @@ class NotificationTile extends StatelessWidget {
       context.read<NotificationCubit>().markAsRead(notification.id);
     }
     return BlocListener<NotificationCubit, NotificationState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is ClearingNotifications) {
+          CoreUtils.showLoadingDialog(context);
+        } else if (state is NotificationCleared) {
+          Navigator.pop(context);
+        }
+      },
       child: Dismissible(
         key: Key(notification.id),
         direction: DismissDirection.endToStart,

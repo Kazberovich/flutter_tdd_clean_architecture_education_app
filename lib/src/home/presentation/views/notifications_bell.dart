@@ -6,6 +6,7 @@ import 'package:iconly/iconly.dart';
 import 'package:tdd_education_app/core/common/app/providers/notifications_notifier.dart';
 import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
+import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/notifications/presentation/views/notifications_view.dart';
 
@@ -53,6 +54,8 @@ class _NotificationBellState extends State<NotificationBell> {
             }
             notificationsCount = state.notifications.length;
           }
+        } else if (state is NotificationError) {
+          CoreUtils.showSnackBar(context, state.message);
         }
       },
       builder: (context, state) {
@@ -64,8 +67,8 @@ class _NotificationBellState extends State<NotificationBell> {
           return GestureDetector(
             onTap: () {
               context.push(
-                BlocProvider(
-                  create: (_) => serviceLocator<NotificationCubit>(),
+                BlocProvider.value(
+                  value: serviceLocator<NotificationCubit>(),
                   child: const NotificationsView(),
                 ),
               );
@@ -81,7 +84,10 @@ class _NotificationBellState extends State<NotificationBell> {
             ),
           );
         }
-        return const Icon(IconlyLight.notification);
+        return const Padding(
+          padding: EdgeInsets.only(right: 8.0),
+          child: Icon(IconlyLight.notification),
+        );
       },
     );
   }

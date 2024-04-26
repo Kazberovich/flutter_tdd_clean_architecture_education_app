@@ -21,6 +21,7 @@ Future<void> _initNotifications() async {
         getNotifications: serviceLocator(),
         markAsRead: serviceLocator(),
         sendNotification: serviceLocator(),
+        notificationCleared: serviceLocator(),
       ),
     )
     ..registerLazySingleton(() => Clear(serviceLocator()))
@@ -28,6 +29,7 @@ Future<void> _initNotifications() async {
     ..registerLazySingleton(() => GetNotifications(serviceLocator()))
     ..registerLazySingleton(() => MarkAsRead(serviceLocator()))
     ..registerLazySingleton(() => SendNotification(serviceLocator()))
+    ..registerLazySingleton(() => const NotificationCleared())
     ..registerLazySingleton<NotificationRepository>(
         () => NotificationRepositoryImplementation(serviceLocator()))
     ..registerLazySingleton<NotificationRemoteDatasource>(

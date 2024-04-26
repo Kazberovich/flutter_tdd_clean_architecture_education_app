@@ -7,8 +7,12 @@ import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/views/add_exam_view.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/views/add_materials_view.dart';
+import 'package:tdd_education_app/src/course/features/videos/presentation/views/add_videos_view.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/widgets/add_course_sheet.dart';
+import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/profile/presentation/widgets/admin_button.dart';
 
 import 'package:tdd_education_app/src/profile/presentation/widgets/user_info_card.dart';
@@ -95,8 +99,15 @@ class ProfileBody extends StatelessWidget {
                 onPressed: () {
                   showModalBottomSheet<void>(
                     context: context,
-                    builder: (context) => BlocProvider(
-                      create: (_) => serviceLocator<CourseCubit>(),
+                    builder: (context) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider(
+                          create: (_) => serviceLocator<CourseCubit>(),
+                        ),
+                        BlocProvider(
+                          create: (_) => serviceLocator<NotificationCubit>(),
+                        ),
+                      ],
                       child: const AddCourseSheet(),
                     ),
                     backgroundColor: Colors.white,
@@ -105,6 +116,27 @@ class ProfileBody extends StatelessWidget {
                     elevation: 0,
                     useSafeArea: true,
                   );
+                },
+              ),
+              AdminButton(
+                label: 'Add Video',
+                icon: IconlyLight.video,
+                onPressed: () {
+                  Navigator.pushNamed(context, AddVideoView.routeName);
+                },
+              ),
+              AdminButton(
+                label: 'Add Materials',
+                icon: IconlyLight.paper_download,
+                onPressed: () {
+                  Navigator.pushNamed(context, AddMaterialsView.routeName);
+                },
+              ),
+              AdminButton(
+                label: 'Add Exam',
+                icon: IconlyLight.document,
+                onPressed: () {
+                  Navigator.pushNamed(context, AddExamView.routeName);
                 },
               ),
             ],
