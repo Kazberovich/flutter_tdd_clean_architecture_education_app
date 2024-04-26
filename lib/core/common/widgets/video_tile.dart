@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:tdd_education_app/core/common/widgets/time_text.dart';
 import 'package:tdd_education_app/core/common/widgets/time_tile.dart';
 import 'package:tdd_education_app/core/extensions/string_extentsions.dart';
 import 'package:tdd_education_app/core/res/colours.dart';

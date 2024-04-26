@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 
 class AdminButton extends StatelessWidget {

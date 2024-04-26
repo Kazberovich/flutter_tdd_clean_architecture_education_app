@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
-import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 

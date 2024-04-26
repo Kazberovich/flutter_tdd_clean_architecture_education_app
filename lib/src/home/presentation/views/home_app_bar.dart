@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/app/providers/user_provider.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';

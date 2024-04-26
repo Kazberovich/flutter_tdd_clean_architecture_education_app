@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/widgets/titled_input_field.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
-import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/constants.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
-import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
-import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 
 import '../../../notifications/presentation/widgets/notification_wrapper.dart';
 

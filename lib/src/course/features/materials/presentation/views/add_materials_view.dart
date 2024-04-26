@@ -17,7 +17,6 @@ import 'package:tdd_education_app/src/course/features/materials/presentation/cub
 
 import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/edit_resource_dialog.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/picked_resource_tile.dart';
-import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_wrapper.dart';
 
 class AddMaterialsView extends StatefulWidget {

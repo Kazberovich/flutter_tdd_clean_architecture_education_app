@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 
 class PageContent extends Equatable {

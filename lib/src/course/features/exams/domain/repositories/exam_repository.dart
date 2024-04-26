@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam_question.dart';

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:tdd_education_app/core/extensions/context_extension.dart';
 import 'package:tdd_education_app/core/extensions/string_extentsions.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';

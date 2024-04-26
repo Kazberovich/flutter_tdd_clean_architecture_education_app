@@ -10,7 +10,6 @@ import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/authentication/data/models/user_model.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:tdd_education_app/src/authentication/presentation/views/sign_in_screen.dart';
-import 'package:tdd_education_app/src/authentication/presentation/widgets/sign_in_form.dart';
 import 'package:tdd_education_app/src/authentication/presentation/widgets/sign_up_form.dart';
 import 'package:tdd_education_app/src/dashboard/presentation/views/dashboard_screen.dart';
 

@@ -4,7 +4,6 @@ import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
-import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/notifications/data/models/notification_model.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/profile/presentation/refactors/profile_body.dart';

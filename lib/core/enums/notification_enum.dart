@@ -1,7 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 
 enum NotificationCategory {

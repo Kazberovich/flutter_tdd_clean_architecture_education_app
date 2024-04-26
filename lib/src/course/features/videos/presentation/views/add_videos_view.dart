@@ -6,7 +6,6 @@ import 'package:tdd_education_app/core/common/widgets/information_field.dart';
 import 'package:tdd_education_app/core/common/widgets/reactive_button.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
 import 'package:tdd_education_app/core/extensions/string_extentsions.dart';
-import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';
@@ -15,7 +14,6 @@ import 'package:tdd_education_app/src/course/features/videos/presentation/utils/
 import 'package:flutter_chat_types/flutter_chat_types.dart' show PreviewData;
 
 import 'package:tdd_education_app/core/common/widgets/video_tile.dart';
-import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_wrapper.dart';
 
 class AddVideoView extends StatefulWidget {
