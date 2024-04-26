@@ -14,6 +14,7 @@ import 'package:tdd_education_app/src/course/features/materials/domain/entities/
 import 'package:tdd_education_app/src/course/features/materials/presentation/cubit/material_cubit.dart';
 
 import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/edit_resource_dialog.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/picked_resource_tile.dart';
 
 class AddMaterialsView extends StatefulWidget {
   const AddMaterialsView({super.key});
@@ -172,6 +173,29 @@ class _AddMaterialsViewState extends State<AddMaterialsView> {
                   style: context.theme.textTheme.bodySmall
                       ?.copyWith(color: Colours.neutralTextColour),
                 ),
+                const SizedBox(height: 10),
+                if (resources.isNotEmpty) ...[
+                  const SizedBox(height: 10),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (_, index) {
+                        final resource = resources[index];
+                        return PickedResourceTile(
+                          resource: resource,
+                          onEdit: () => editResource(index),
+                          onDelete: () {
+                            setState(() {
+                              resources.removeAt(index);
+                            });
+                          },
+                        );
+                      },
+                      itemCount: resources.length,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
