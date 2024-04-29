@@ -20,7 +20,6 @@ class CourseDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final course = (this.course as CourseModel).copyWith(
-      numberOfVideos: 2,
       numberOfExams: 3,
       numberOfMaterials: 24,
     );
