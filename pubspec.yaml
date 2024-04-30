@@ -16,6 +16,9 @@ dependencies:
   flutter_tindercard:
     git:
       url: https://github.com/NonymousMorlock/flutter_tindercard.git
+  file_icon:
+    git:
+      url: https://github.com/NonymousMorlock/file_icon
   dartz: ^0.10.1
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
