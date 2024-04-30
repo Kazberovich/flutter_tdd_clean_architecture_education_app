@@ -120,6 +120,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         ),
         settings: routeSettings,
       );
+    case CourseMaterialsView.routeName:
+      return _pageBuilder(
+        (p0) => BlocProvider(
+          create: (_) => serviceLocator<MaterialCubit>(),
+          child: CourseMaterialsView(routeSettings.arguments! as Course),
+        ),
+        settings: routeSettings,
+      );
 
     default:
       return _pageBuilder(
