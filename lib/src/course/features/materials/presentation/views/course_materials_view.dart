@@ -8,11 +8,11 @@ import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
-import 'package:tdd_education_app/src/course/features/materials/domain/entities/resource.dart';
 
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/resource_controller.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/resource_tile.dart';
 
 class CourseMaterialsView extends StatefulWidget {
   const CourseMaterialsView(
@@ -78,9 +78,7 @@ class _CourseMaterialsViewState extends State<CourseMaterialsView> {
                     return ChangeNotifierProvider(
                       create: (_) => serviceLocator<ResourceController>()
                         ..initResource(materials[index]),
-                      child: const Placeholder(
-                        fallbackHeight: 20,
-                      ),
+                      child: const ResourceTile(),
                     );
                   },
                   itemCount: materials.length,
