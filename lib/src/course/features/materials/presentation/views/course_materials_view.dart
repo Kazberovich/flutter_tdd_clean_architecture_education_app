@@ -5,10 +5,14 @@ import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
 import 'package:tdd_education_app/core/common/widgets/not_found_text.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
+import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
+import 'package:tdd_education_app/src/course/features/materials/domain/entities/resource.dart';
 
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
+import 'package:provider/provider.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/app/resource_controller.dart';
 
 class CourseMaterialsView extends StatefulWidget {
   const CourseMaterialsView(
@@ -71,7 +75,13 @@ class _CourseMaterialsViewState extends State<CourseMaterialsView> {
                   ),
                   padding: const EdgeInsets.all(20),
                   itemBuilder: (_, index) {
-                    return Placeholder(fallbackHeight: 50,);
+                    return ChangeNotifierProvider(
+                      create: (_) => serviceLocator<ResourceController>()
+                        ..initResource(materials[index]),
+                      child: const Placeholder(
+                        fallbackHeight: 20,
+                      ),
+                    );
                   },
                   itemCount: materials.length,
                 ),

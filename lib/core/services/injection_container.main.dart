@@ -88,6 +88,12 @@ Future<void> _initMaterial() async {
         auth: serviceLocator(),
         storage: serviceLocator(),
       ),
+    )
+    ..registerFactory(
+      () => ResourceController(
+        storage: serviceLocator(),
+        preferences: serviceLocator(),
+      ),
     );
 }
 
