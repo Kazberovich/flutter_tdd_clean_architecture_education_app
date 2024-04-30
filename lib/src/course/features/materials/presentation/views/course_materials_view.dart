@@ -7,7 +7,8 @@ import 'package:tdd_education_app/core/common/widgets/not_found_text.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
-import 'package:tdd_education_app/src/course/features/materials/presentation/cubit/material_cubit.dart';
+
+import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
 
 class CourseMaterialsView extends StatefulWidget {
   const CourseMaterialsView(
