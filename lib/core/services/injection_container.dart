@@ -32,7 +32,7 @@ import 'package:tdd_education_app/src/course/features/materials/data/repos/mater
 import 'package:tdd_education_app/src/course/features/materials/domain/repos/material_repo.dart';
 import 'package:tdd_education_app/src/course/features/materials/domain/usecases/add_material.dart';
 import 'package:tdd_education_app/src/course/features/materials/domain/usecases/get_materials.dart';
-import 'package:tdd_education_app/src/course/features/materials/presentation/cubit/material_cubit.dart';
+import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/datasourses/video_remote_datasource.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/repositories/video_repository_implementation.dart';
 import 'package:tdd_education_app/src/course/features/videos/domain/repositories/video_repository.dart';
