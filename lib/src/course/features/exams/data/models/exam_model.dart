@@ -37,7 +37,7 @@ class ExamModel extends Exam {
           description: map['description'] as String,
           timeLimit: (map['timeLimit'] as num).toInt(),
           imageUrl: map['imageUrl'] as String?,
-          questions: [],
+          questions: null,
         );
 
   ExamModel.fromUploadMap(DataMap map)
@@ -45,11 +45,11 @@ class ExamModel extends Exam {
           id: map['id'] as String? ?? '',
           courseId: map['courseId'] as String? ?? '',
           title: map['title'] as String,
-          description: map['Description'] as String,
-          timeLimit: (map['time_seconds'] as num).toInt(),
-          imageUrl: (map['image_url'] as String).isEmpty
+          description: map['description'] as String,
+          timeLimit: (map['timeLimit'] as num).toInt(),
+          imageUrl: (map['imageUrl'] as String).isEmpty
               ? null
-              : map['image_url'] as String,
+              : map['imageUrl'] as String,
           questions: List<DataMap>.from(map['questions'] as List<dynamic>)
               .map(ExamQuestionModel.fromUploadMap)
               .toList(),
