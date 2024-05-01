@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/widgets/course_picker.dart';
 import 'package:tdd_education_app/core/enums/notification_enum.dart';
+import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
@@ -46,10 +47,11 @@ class _AddExamViewState extends State<AddExamView> {
     if (formKey.currentState!.validate()) {
       final json = examFile!.readAsStringSync();
       final jsonMap = jsonDecode(json) as DataMap;
-      final exam = ExamModel.fromUploadMap(jsonMap)
-        ..copyWith(
-          courseId: courseNotifier.value!.id,
-        );
+
+      final exam = ExamModel.fromUploadMap(jsonMap).copyWith(
+        courseId: courseNotifier.value!.id,
+      );
+
       await context.read<ExamCubit>().uploadExam(exam);
     }
   }
@@ -102,6 +104,49 @@ class _AddExamViewState extends State<AddExamView> {
                         controller: courseController,
                         notifier: courseNotifier,
                       ),
+                    ),
+                    const SizedBox(height: 10),
+                    if (examFile != null) ...[
+                      const SizedBox(height: 10),
+                      Card(
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Image.asset(MediaRes.json),
+                          ),
+                          title: Text(examFile!.path.split('/').last),
+                          trailing: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                examFile = null;
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: pickExamFile,
+                          child: Text(
+                            examFile == null
+                                ? 'Select Exam File'
+                                : 'Replace Exam File',
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        ElevatedButton(
+                          onPressed: uploadExam,
+                          child: const Text('Confirm'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
