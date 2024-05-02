@@ -138,6 +138,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
+    case ExamDetailsView.routeName:
+      return _pageBuilder(
+        (p0) => BlocProvider(
+          create: (_) => serviceLocator<ExamCubit>(),
+          child: ExamDetailsView(routeSettings.arguments! as Exam),
+        ),
+        settings: routeSettings,
+      );
+
     default:
       return _pageBuilder(
         (_) => const PageUnderConstruction(),
