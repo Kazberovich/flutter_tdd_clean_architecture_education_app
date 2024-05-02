@@ -128,6 +128,7 @@ class _AddExamViewState extends State<AddExamView> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                     ],
                     const SizedBox(height: 10),
                     Row(
