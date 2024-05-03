@@ -57,67 +57,68 @@ class _CourseExamsViewState extends State<CourseExamsView> {
             );
           } else if (state is ExamsLoaded) {
             return SafeArea(
-                child: ListView.builder(
-              itemBuilder: (_, index) {
-                final exam = state.exams[index];
-                return Stack(
-                  children: [
-                    Card(
-                      margin: const EdgeInsets.all(4).copyWith(bottom: 30),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              exam.title,
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+              child: ListView.builder(
+                itemBuilder: (_, index) {
+                  final exam = state.exams[index];
+                  return Stack(
+                    children: [
+                      Card(
+                        margin: const EdgeInsets.all(4).copyWith(bottom: 30),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                exam.title,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 10),
-                            Text(exam.description),
-                            const SizedBox(height: 10),
-                            Text(
-                              exam.timeLimit.displayDuration,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.width * .2,
-                          vertical: 10,
-                        ),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(
-                              context,
-                              ExamDetailsView.routeName,
-                              arguments: exam,
-                            );
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
-                            foregroundColor: Colors.white,
+                              const SizedBox(height: 10),
+                              Text(exam.description),
+                              const SizedBox(height: 10),
+                              Text(
+                                exam.timeLimit.displayDuration,
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
                           ),
-                          child: const Text('Take Exam'),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-              itemCount: state.exams.length,
-              padding: const EdgeInsets.all(20),
-            ));
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: context.width * .2,
+                            vertical: 10,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                ExamDetailsView.routeName,
+                                arguments: exam,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.green,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: const Text('Take Exam'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+                itemCount: state.exams.length,
+                padding: const EdgeInsets.all(20),
+              ),
+            );
           }
 
           return const SizedBox.shrink();

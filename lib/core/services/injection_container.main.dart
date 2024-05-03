@@ -31,7 +31,8 @@ Future<void> _initNotifications() async {
     ..registerLazySingleton(() => SendNotification(serviceLocator()))
     ..registerLazySingleton(() => const NotificationCleared())
     ..registerLazySingleton<NotificationRepository>(
-        () => NotificationRepositoryImplementation(serviceLocator()))
+      () => NotificationRepositoryImplementation(serviceLocator()),
+    )
     ..registerLazySingleton<NotificationRemoteDatasource>(
       () => NotificationRemoteDatasourceImplementation(
         firestore: serviceLocator(),
@@ -61,7 +62,8 @@ Future<void> _initExam() async {
     ..registerLazySingleton(() => GetUserCourseExams(serviceLocator()))
     ..registerLazySingleton(() => GetUserExams(serviceLocator()))
     ..registerLazySingleton<ExamRepository>(
-        () => ExamRepoImpl(serviceLocator()))
+      () => ExamRepoImpl(serviceLocator()),
+    )
     ..registerLazySingleton<ExamRemoteDataSrc>(
       () => ExamRemoteDataSrcImpl(
         auth: serviceLocator(),
@@ -81,7 +83,8 @@ Future<void> _initMaterial() async {
     ..registerLazySingleton(() => AddMaterial(serviceLocator()))
     ..registerLazySingleton(() => GetMaterials(serviceLocator()))
     ..registerLazySingleton<MaterialRepo>(
-        () => MaterialRepoImpl(serviceLocator()))
+      () => MaterialRepoImpl(serviceLocator()),
+    )
     ..registerLazySingleton<MaterialRemoteDataSrc>(
       () => MaterialRemoteDataSrcImpl(
         firestore: serviceLocator(),
@@ -99,8 +102,9 @@ Future<void> _initMaterial() async {
 
 Future<void> _initVideo() async {
   serviceLocator
-    ..registerFactory(() =>
-        VideoCubit(addVideo: serviceLocator(), getVideos: serviceLocator()))
+    ..registerFactory(
+      () => VideoCubit(addVideo: serviceLocator(), getVideos: serviceLocator()),
+    )
     ..registerLazySingleton(() => AddVideo(serviceLocator()))
     ..registerLazySingleton(() => GetVideos(serviceLocator()))
     ..registerLazySingleton<VideoRepository>(
@@ -139,11 +143,14 @@ Future<void> _initCourse() async {
 
 Future<void> _initAuth() async {
   serviceLocator
-    ..registerFactory(() => AuthenticationBloc(
+    ..registerFactory(
+      () => AuthenticationBloc(
         signInUsecase: serviceLocator(),
         signUpUsecase: serviceLocator(),
         forgotPasswordUsecase: serviceLocator(),
-        updateUserUsecase: serviceLocator()))
+        updateUserUsecase: serviceLocator(),
+      ),
+    )
     ..registerLazySingleton(
       () => SignInUsecase(serviceLocator()),
     )
@@ -190,8 +197,10 @@ Future<void> _initOnboarding() async {
     )
     ..registerLazySingleton(() => CheckIfUserIsFirstTimer(serviceLocator()))
     ..registerLazySingleton<OnboardingRepository>(
-        () => OnboardingRepositoryImplementation(serviceLocator()))
+      () => OnboardingRepositoryImplementation(serviceLocator()),
+    )
     ..registerLazySingleton<OnboardingLocalDataSource>(
-        () => OnboardingLocalDataSourceImplementation(serviceLocator()))
+      () => OnboardingLocalDataSourceImplementation(serviceLocator()),
+    )
     ..registerLazySingleton(() => prefs);
 }
