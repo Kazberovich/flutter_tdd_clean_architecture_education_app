@@ -99,7 +99,8 @@ void main() {
   });
 
   Future<DocumentReference> addNotification(
-      NotificationModel notification) async {
+    NotificationModel notification,
+  ) async {
     return firestore
         .collection('users')
         .doc(auth.currentUser!.uid)

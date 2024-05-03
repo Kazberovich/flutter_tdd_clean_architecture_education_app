@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide MaterialState;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:tdd_education_app/core/common/views/loading_view.dart';
 import 'package:tdd_education_app/core/common/widgets/gradient_background.dart';
 import 'package:tdd_education_app/core/common/widgets/nested_back_button.dart';
@@ -8,9 +9,7 @@ import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
-
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
-import 'package:provider/provider.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/resource_controller.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/widgets/resource_tile.dart';
 

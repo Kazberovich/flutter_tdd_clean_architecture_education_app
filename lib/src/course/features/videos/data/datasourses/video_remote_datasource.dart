@@ -16,11 +16,11 @@ abstract class VideoRemoteDataSource {
 }
 
 class VideoRemoteDataSourceImplementation implements VideoRemoteDataSource {
-  const VideoRemoteDataSourceImplementation(
-      {required FirebaseAuth auth,
-      required FirebaseFirestore firestore,
-      required FirebaseStorage storage})
-      : _auth = auth,
+  const VideoRemoteDataSourceImplementation({
+    required FirebaseAuth auth,
+    required FirebaseFirestore firestore,
+    required FirebaseStorage storage,
+  })  : _auth = auth,
         _firestore = firestore,
         _storage = storage;
 

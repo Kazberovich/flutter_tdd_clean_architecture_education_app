@@ -39,7 +39,7 @@ class SectionHeader extends StatelessWidget {
                 color: Colours.primaryColour,
               ),
             ),
-          )
+          ),
       ],
     );
   }

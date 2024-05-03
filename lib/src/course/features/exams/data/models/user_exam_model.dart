@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/user_choice_model.dart';
+import 'package:tdd_education_app/src/course/features/exams/domain/entities/user_choice.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/user_exam.dart';
-
-import '../../domain/entities/user_choice.dart';
 
 class UserExamModel extends UserExam {
   const UserExamModel({
