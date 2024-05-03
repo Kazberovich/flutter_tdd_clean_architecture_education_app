@@ -61,10 +61,12 @@ class _ExpandableTextState extends State<ExpandableText> {
                     : '${widget.text.substring(
                         0,
                         textPainter
-                            .getPositionForOffset(Offset(
-                              widget.context.width,
-                              widget.context.height,
-                            ))
+                            .getPositionForOffset(
+                              Offset(
+                                widget.context.width,
+                                widget.context.height,
+                              ),
+                            )
                             .offset,
                       )}...',
                 style: widget.style ?? defaultStyle,

@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:tdd_education_app/core/errors/exceptions.dart';
 import 'package:tdd_education_app/core/utils/datasource_utils.dart';
 import 'package:tdd_education_app/src/course/features/videos/data/models/video_model.dart';
 import 'package:tdd_education_app/src/course/features/videos/domain/entities/video.dart';
-
-import '../../../../../../core/errors/exceptions.dart';
 
 abstract class VideoRemoteDataSource {
   Future<List<VideoModel>> getVideos(String courseId);
