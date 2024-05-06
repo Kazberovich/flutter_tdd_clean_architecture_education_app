@@ -11,7 +11,7 @@ import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
-import 'package:tdd_education_app/src/course/features/exams/presentation/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
 import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_wrapper.dart';
 
 class AddExamView extends StatefulWidget {

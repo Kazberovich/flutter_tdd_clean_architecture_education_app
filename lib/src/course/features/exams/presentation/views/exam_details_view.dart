@@ -10,7 +10,7 @@ import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
-import 'package:tdd_education_app/src/course/features/exams/presentation/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
 
 class ExamDetailsView extends StatefulWidget {
   const ExamDetailsView(this.exam, {super.key});
