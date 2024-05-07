@@ -53,6 +53,8 @@ class ExamController extends ChangeNotifier {
     return '$minutes:$seconds';
   }
 
+  int get remainingTimeInSeconds => _remainingTime;
+
   int _currentIndex = 0;
 
   int get currentIndex => _currentIndex;
