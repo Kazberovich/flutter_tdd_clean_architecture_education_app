@@ -178,6 +178,53 @@ class _ExamViewState extends State<ExamView> {
                   ),
                 ],
               ),
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Text(
+                              'Question ${controller.currentIndex + 1}',
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Color(0xFF666E7A),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: const Color(0xFFC4C4C4),
+                                borderRadius: BorderRadius.circular(24),
+                              ),
+                              child: Center(
+                                child: controller.exam.imageUrl == null
+                                    ? Image.asset(
+                                        MediaRes.test,
+                                        fit: BoxFit.cover,
+                                        height: 200,
+                                        width: double.infinity,
+                                      )
+                                    : Image.network(
+                                        controller.exam.imageUrl!,
+                                        fit: BoxFit.cover,
+                                        height: 200,
+                                        width: double.infinity,
+                                      ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
         );
