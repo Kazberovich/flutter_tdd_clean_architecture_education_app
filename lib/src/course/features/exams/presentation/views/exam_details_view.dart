@@ -11,6 +11,7 @@ import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/features/exams/data/models/exam_model.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/views/exam_view.dart';
 
 class ExamDetailsView extends StatefulWidget {
   const ExamDetailsView(this.exam, {super.key});
@@ -136,11 +137,11 @@ class _ExamDetailsViewState extends State<ExamDetailsView> {
                       RoundedButton(
                         label: 'Start Exam',
                         onPressed: () {
-                          // Navigator.pushNamed(
-                          //   context,
-                          //   ExamView.routeName,
-                          //   arguments: completeExam,
-                          // );
+                          Navigator.pushNamed(
+                            context,
+                            ExamView.routeName,
+                            arguments: completeExam,
+                          );
                         },
                       )
                     else
