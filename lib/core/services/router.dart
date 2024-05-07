@@ -14,9 +14,11 @@ import 'package:tdd_education_app/src/authentication/presentation/views/sign_up_
 import 'package:tdd_education_app/src/course/domain/entities/course.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/app/providers/exam_controller.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/views/add_exam_view.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/views/course_exams_view.dart';
 import 'package:tdd_education_app/src/course/features/exams/presentation/views/exam_details_view.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/views/exam_view.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/app/cubit/material_cubit.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/views/add_materials_view.dart';
 import 'package:tdd_education_app/src/course/features/materials/presentation/views/course_materials_view.dart';
@@ -31,5 +33,6 @@ import 'package:tdd_education_app/src/notifications/presentation/cubit/notificat
 import 'package:tdd_education_app/src/onboarding/data/datasources/onboarding_local_datasource.dart';
 import 'package:tdd_education_app/src/onboarding/presentation/cubit/onboarding_cubit.dart';
 import 'package:tdd_education_app/src/onboarding/presentation/views/onboarding_screen.dart';
+import 'package:provider/provider.dart';
 
 part 'router.main.dart';

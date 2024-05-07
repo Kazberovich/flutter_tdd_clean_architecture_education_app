@@ -147,6 +147,20 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
+    case ExamView.routeName:
+      return _pageBuilder(
+        (p0) => BlocProvider(
+          create: (_) => serviceLocator<ExamCubit>(),
+          child: ChangeNotifierProvider(
+            create: (context) => ExamController(
+              exam: routeSettings.arguments! as Exam,
+            ),
+            child: const ExamView(),
+          ),
+        ),
+        settings: routeSettings,
+      );
+
     default:
       return _pageBuilder(
         (_) => const PageUnderConstruction(),
