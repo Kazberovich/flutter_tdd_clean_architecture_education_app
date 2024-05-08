@@ -85,7 +85,7 @@ class _NotificationBellState extends State<NotificationBell> {
           );
         }
         return const Padding(
-          padding: EdgeInsets.only(right: 8.0),
+          padding: EdgeInsets.only(right: 8),
           child: Icon(IconlyLight.notification),
         );
       },

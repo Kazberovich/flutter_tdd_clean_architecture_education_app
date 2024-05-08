@@ -21,9 +21,10 @@ abstract class NotificationRemoteDatasource {
 
 class NotificationRemoteDatasourceImplementation
     implements NotificationRemoteDatasource {
-  NotificationRemoteDatasourceImplementation(
-      {required FirebaseFirestore firestore, required FirebaseAuth auth})
-      : _firestore = firestore,
+  NotificationRemoteDatasourceImplementation({
+    required FirebaseFirestore firestore,
+    required FirebaseAuth auth,
+  })  : _firestore = firestore,
         _auth = auth;
 
   final FirebaseFirestore _firestore;

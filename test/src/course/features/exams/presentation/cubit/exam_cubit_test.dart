@@ -13,7 +13,7 @@ import 'package:tdd_education_app/src/course/features/exams/domain/usecases/get_
 import 'package:tdd_education_app/src/course/features/exams/domain/usecases/submit_exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/usecases/update_exam.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/usecases/upload_exam.dart';
-import 'package:tdd_education_app/src/course/features/exams/presentation/cubit/exam_cubit.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
 
 class MockGetExamQuestions extends Mock implements GetExamQuestions {}
 

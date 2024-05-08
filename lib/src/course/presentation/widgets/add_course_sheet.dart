@@ -9,7 +9,7 @@ import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/data/models/course_model.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 
-import '../../../notifications/presentation/widgets/notification_wrapper.dart';
+import 'package:tdd_education_app/src/notifications/presentation/widgets/notification_wrapper.dart';
 
 class AddCourseSheet extends StatefulWidget {
   const AddCourseSheet({super.key});

@@ -26,7 +26,7 @@ class QuestionChoiceModel extends QuestionChoice {
       : this(
           questionId: 'Test String',
           identifier: map['identifier'] as String,
-          choiceAnswer: map['Answer'] as String,
+          choiceAnswer: map['choiceAnswer'] as String,
         );
 
   QuestionChoiceModel copyWith({

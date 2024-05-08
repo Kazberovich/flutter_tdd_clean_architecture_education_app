@@ -64,8 +64,10 @@ class AuthenticationRemoteDataSourceImplementation
   }
 
   @override
-  Future<LocalUserModel> signIn(
-      {required String email, required String password}) async {
+  Future<LocalUserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
     try {
       final result = await _authClient.signInWithEmailAndPassword(
         email: email,

@@ -22,7 +22,7 @@ dependencies:
   dartz: ^0.10.1
   equatable: ^2.0.5
   flutter_bloc: ^8.1.3
-  file_picker: ^6.1.1
+  file_picker: ^8.0.3
   font_awesome_flutter: ^10.6.0
   get_it: ^7.6.6
   iconly: ^1.0.1

@@ -41,9 +41,9 @@ class ExamQuestionModel extends ExamQuestion {
     id: map['id'] as String? ?? '',
     examId: map['examId'] as String? ?? '',
     courseId: map['courseId'] as String? ?? '',
-    questionText: map['question'] as String,
-    correctAnswer: map['correct_answer'] as String,
-    choices: List<DataMap>.from(map['answers'] as List<dynamic>)
+    questionText: map['questionText'] as String,
+    correctAnswer: map['correctAnswer'] as String,
+    choices: List<DataMap>.from(map['choices'] as List<dynamic>)
         .map(QuestionChoiceModel.fromUploadMap)
         .toList(),
   );

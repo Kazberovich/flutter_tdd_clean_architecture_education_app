@@ -21,8 +21,9 @@ void main() {
     cacheFirstTimer = MockCacheFirstTimer();
     checkIfUserIsFirstTimer = MockCheckIfUserIsFirstTimer();
     onboardingCubit = OnboardingCubit(
-        cacheFirstTimer: cacheFirstTimer,
-        checkIfUserIsFirstTimer: checkIfUserIsFirstTimer);
+      cacheFirstTimer: cacheFirstTimer,
+      checkIfUserIsFirstTimer: checkIfUserIsFirstTimer,
+    );
   });
 
   final tFailure =
