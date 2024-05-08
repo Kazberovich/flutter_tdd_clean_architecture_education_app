@@ -218,6 +218,41 @@ class _ExamViewState extends State<ExamView> {
                               ),
                             ),
                             const SizedBox(height: 20),
+                            Text(
+                              controller.currentQuestion.questionText,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (_, index) {
+                                final choice =
+                                    controller.currentQuestion.choices[index];
+                                return RadioListTile(
+                                  value: choice.identifier,
+                                  contentPadding: EdgeInsets.zero,
+                                  groupValue: controller.userAnswer?.userChoice,
+                                  title: Text(
+                                    '${choice.identifier}. '
+                                    '${choice.choiceAnswer}',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  onChanged: (value) {
+                                    controller.answer(choice);
+                                  },
+                                );
+                              },
+                              itemCount:
+                                  controller.currentQuestion.choices.length,
+                            ),
                           ],
                         ),
                       ),
