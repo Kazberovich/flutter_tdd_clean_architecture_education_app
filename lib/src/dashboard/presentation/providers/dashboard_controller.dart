@@ -34,9 +34,12 @@ class DashboardController extends ChangeNotifier {
     ChangeNotifierProvider(
       create: (_) => TabNavigator(
         TabItem(
-          child: ChangeNotifierProvider(
-            create: (_) => QuickAccessTabController(),
-            child: const QuickAccessView(),
+          child: BlocProvider(
+            create: (context) => serviceLocator<CourseCubit>(),
+            child: ChangeNotifierProvider(
+              create: (_) => QuickAccessTabController(),
+              child: const QuickAccessView(),
+            ),
           ),
         ),
       ),
