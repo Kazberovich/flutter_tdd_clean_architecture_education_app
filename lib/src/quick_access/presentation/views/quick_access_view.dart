@@ -4,6 +4,7 @@ import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/refactors/quick_access_app_bar.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/refactors/quick_access_header.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/refactors/quick_access_tab_bar.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/refactors/quick_access_tab_body.dart';
 
 class QuickAccessView extends StatelessWidget {
   const QuickAccessView({super.key});
@@ -25,6 +26,9 @@ class QuickAccessView extends StatelessWidget {
               ),
               Expanded(
                 child: QuickAccessTabBar(),
+              ),
+              Expanded(
+                child: QuickAccessTabBody(),
               ),
             ],
           ),

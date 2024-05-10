@@ -6,6 +6,7 @@ import 'package:tdd_education_app/core/utils/core_utils.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/provider/quick_access_tab_controller.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/refactors/document_and_exam_body.dart';
 
 class QuickAccessTabBody extends StatefulWidget {
   const QuickAccessTabBody({super.key});
@@ -47,7 +48,10 @@ class _QuickAccessTabBodyState extends State<QuickAccessTabBody> {
               switch (controller.currentIndex) {
                 case 0:
                 case 1:
-                  return const Placeholder();
+                  return DocumentsAndExamBody(
+                    courses: courses,
+                    index: controller.currentIndex,
+                  );
                 default:
                   return const Placeholder();
               }
