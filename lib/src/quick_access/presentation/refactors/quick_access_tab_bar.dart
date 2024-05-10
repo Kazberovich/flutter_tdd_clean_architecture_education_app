@@ -7,7 +7,7 @@ class QuickAccessTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TabTile(index: 0, title: 'Document'),
         TabTile(index: 1, title: 'Exam'),
