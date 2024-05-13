@@ -28,6 +28,7 @@ class QuickAccessView extends StatelessWidget {
                 child: QuickAccessTabBar(),
               ),
               Expanded(
+                flex: 2,
                 child: QuickAccessTabBody(),
               ),
             ],

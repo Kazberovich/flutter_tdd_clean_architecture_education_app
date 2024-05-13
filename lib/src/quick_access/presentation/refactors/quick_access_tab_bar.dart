@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tdd_education_app/src/quick_access/presentation/tab_tile.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/widgets/tab_tile.dart';
 
 class QuickAccessTabBar extends StatelessWidget {
   const QuickAccessTabBar({super.key});
