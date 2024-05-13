@@ -147,6 +147,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
         settings: routeSettings,
       );
 
+    case ExamHistoryDetailScreen.routeName:
+      return _pageBuilder(
+        (_) => ExamHistoryDetailScreen(
+          exam: routeSettings.arguments! as UserExam,
+        ),
+        settings: routeSettings,
+      );
+
     case ExamView.routeName:
       return _pageBuilder(
         (p0) => BlocProvider(

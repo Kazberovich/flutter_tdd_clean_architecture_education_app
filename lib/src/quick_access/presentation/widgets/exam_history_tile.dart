@@ -3,6 +3,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:tdd_education_app/core/res/colours.dart';
 import 'package:tdd_education_app/core/res/media_resources.dart';
 import 'package:tdd_education_app/src/course/features/exams/domain/entities/user_exam.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/views/exam_history_details_screen.dart';
 
 class ExamHistoryTile extends StatelessWidget {
   const ExamHistoryTile({
@@ -20,9 +21,12 @@ class ExamHistoryTile extends StatelessWidget {
         exam.answers.length / exam.totalQuestions;
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: shouldNavigateToDetails
-          ? () => Navigator.of(context)
-              .pushNamed('ExamHistoryDetailsView.routeName', arguments: exam)
+          ? () => Navigator.of(context).pushNamed(
+                ExamHistoryDetailScreen.routeName,
+                arguments: exam,
+              )
           : null,
       child: Row(
         children: [
