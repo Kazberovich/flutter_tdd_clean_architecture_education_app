@@ -9,6 +9,8 @@ import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dar
 import 'package:tdd_education_app/src/home/presentation/views/home_view.dart';
 import 'package:tdd_education_app/src/notifications/presentation/cubit/notification_cubit.dart';
 import 'package:tdd_education_app/src/profile/presentation/views/profile_view.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/provider/quick_access_tab_controller.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/views/quick_access_view.dart';
 
 class DashboardController extends ChangeNotifier {
   List<int> _indexHistory = [0];
@@ -32,7 +34,13 @@ class DashboardController extends ChangeNotifier {
     ChangeNotifierProvider(
       create: (_) => TabNavigator(
         TabItem(
-          child: const Placeholder(),
+          child: BlocProvider(
+            create: (context) => serviceLocator<CourseCubit>(),
+            child: ChangeNotifierProvider(
+              create: (_) => QuickAccessTabController(),
+              child: const QuickAccessView(),
+            ),
+          ),
         ),
       ),
       child: const PersistentView(),
