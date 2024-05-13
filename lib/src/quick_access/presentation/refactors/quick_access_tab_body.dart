@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tdd_education_app/core/common/views/loading_view.dart';
 import 'package:tdd_education_app/core/common/widgets/not_found_text.dart';
+import 'package:tdd_education_app/core/services/injection_container.dart';
 import 'package:tdd_education_app/core/utils/core_utils.dart';
+import 'package:tdd_education_app/src/course/features/exams/presentation/app/cubit/exam_cubit.dart';
 import 'package:tdd_education_app/src/course/presentation/cubit/course_cubit.dart';
 import 'package:provider/provider.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/provider/quick_access_tab_controller.dart';
 import 'package:tdd_education_app/src/quick_access/presentation/refactors/document_and_exam_body.dart';
+import 'package:tdd_education_app/src/quick_access/presentation/refactors/exam_history_body.dart';
 
 class QuickAccessTabBody extends StatefulWidget {
   const QuickAccessTabBody({super.key});
@@ -53,7 +56,10 @@ class _QuickAccessTabBodyState extends State<QuickAccessTabBody> {
                     index: controller.currentIndex,
                   );
                 default:
-                  return const Placeholder();
+                  return BlocProvider(
+                    create: (_) => serviceLocator<ExamCubit>(),
+                    child: const ExamHistoryBody(),
+                  );
               }
             },
           );
