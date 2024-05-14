@@ -1,7 +1,7 @@
-import 'package:flutter_chat_types/flutter_chat_types.dart';
 import 'package:tdd_education_app/core/utils/typedefs.dart';
 import 'package:tdd_education_app/src/authentication/domain/entities/user.dart';
 import 'package:tdd_education_app/src/chat/domain/entities/group.dart';
+import 'package:tdd_education_app/src/chat/domain/entities/message.dart';
 
 abstract class ChatRepo {
   const ChatRepo();
