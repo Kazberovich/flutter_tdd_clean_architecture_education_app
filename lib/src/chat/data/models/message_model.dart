@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:education_app/core/utils/typedefs.dart';
-import 'package:education_app/src/chat/domain/entities/message.dart';
+import 'package:tdd_education_app/core/utils/typedefs.dart';
+import 'package:tdd_education_app/src/chat/domain/entities/message.dart';
 
 class MessageModel extends Message {
   const MessageModel({
