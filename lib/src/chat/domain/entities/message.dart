@@ -29,5 +29,5 @@ class Message extends Equatable {
   final DateTime timestamp;
 
   @override
-  List<Object> get props => [id, groupId];
+  List<Object> get props => [id, groupId, senderId, message, timestamp];
 }
