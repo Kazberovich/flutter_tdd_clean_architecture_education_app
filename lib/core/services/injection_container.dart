@@ -11,6 +11,12 @@ import 'package:tdd_education_app/src/authentication/domain/usecases/sign_in.dar
 import 'package:tdd_education_app/src/authentication/domain/usecases/sign_up.dart';
 import 'package:tdd_education_app/src/authentication/domain/usecases/update_user.dart';
 import 'package:tdd_education_app/src/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:tdd_education_app/src/chat/domain/repositories/chat_repository.dart';
+import 'package:tdd_education_app/src/chat/domain/usecases/get_groups.dart';
+import 'package:tdd_education_app/src/chat/domain/usecases/get_messages.dart';
+import 'package:tdd_education_app/src/chat/domain/usecases/get_user_by_id.dart';
+import 'package:tdd_education_app/src/chat/domain/usecases/join_group.dart';
+import 'package:tdd_education_app/src/chat/presentation/cubit/chat_cubit.dart';
 import 'package:tdd_education_app/src/course/data/datasources/course_remote_datasource.dart';
 import 'package:tdd_education_app/src/course/data/repositories/course_repository_implementation.dart';
 import 'package:tdd_education_app/src/course/domain/repositories/course_repository.dart';
@@ -56,5 +62,10 @@ import 'package:tdd_education_app/src/onboarding/domain/repositories/onboarding_
 import 'package:tdd_education_app/src/onboarding/domain/usecases/cache_first_timer.dart';
 import 'package:tdd_education_app/src/onboarding/domain/usecases/check_if_user_is_first_timer.dart';
 import 'package:tdd_education_app/src/onboarding/presentation/cubit/onboarding_cubit.dart';
+
+import '../../src/chat/data/datasources/chat_remote_data_source.dart';
+import '../../src/chat/data/repositories/chat_repo_impl.dart';
+import '../../src/chat/domain/usecases/leave_group.dart';
+import '../../src/chat/domain/usecases/send_message.dart';
 
 part 'injection_container.main.dart';

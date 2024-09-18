@@ -10,6 +10,34 @@ Future<void> init() async {
   await _initMaterial();
   await _initExam();
   await _initNotifications();
+  await _initChat();
+}
+
+Future<void> _initChat() async {
+  serviceLocator
+    ..registerFactory(
+      () => ChatCubit(
+        getGroups: serviceLocator(),
+        getMessages: serviceLocator(),
+        getUserById: serviceLocator(),
+        joinGroup: serviceLocator(),
+        leaveGroup: serviceLocator(),
+        sendMessage: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(() => GetGroups(serviceLocator()))
+    ..registerLazySingleton(() => GetMessages(serviceLocator()))
+    ..registerLazySingleton(() => GetUserById(serviceLocator()))
+    ..registerLazySingleton(() => JoinGroup(serviceLocator()))
+    ..registerLazySingleton(() => LeaveGroup(serviceLocator()))
+    ..registerLazySingleton(() => SendMessage(serviceLocator()))
+    ..registerLazySingleton<ChatRepo>(() => ChatRepoImpl(serviceLocator()))
+    ..registerLazySingleton<ChatRemoteDataSource>(
+      () => ChatRemoteDataSourceImpl(
+        firestore: serviceLocator(),
+        auth: serviceLocator(),
+      ),
+    );
 }
 
 Future<void> _initNotifications() async {
