@@ -21,6 +21,8 @@ class _MessageBubbleState extends State<MessageBubble> {
   LocalUser? user;
   late bool isCurrentUser;
 
+
+
   @override
   void initState() {
     if (widget.message.senderId == context.currentUser!.uid) {
@@ -44,6 +46,7 @@ class _MessageBubbleState extends State<MessageBubble> {
         }
       },
       child: Container(
+        key: widget.key,
         constraints: BoxConstraints(maxWidth: context.width - 45),
         margin: const EdgeInsets.symmetric(
           vertical: 8,
